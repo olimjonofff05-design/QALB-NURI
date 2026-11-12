@@ -29,7 +29,12 @@
     KEY = LEGACY + "_" + uid;
     let local = readLocal(KEY);
     const guest = readLocal(LEGACY);
-    if (!local && !cloud && guest && !localStorage.getItem("qn_guest_migrated")) { local = guest; localStorage.setItem("qn_guest_migrated", uid); }
+    if (!local && !cloud && !localStorage.getItem("qn_guest_migrated")) {
+      /* Shu qurilmadagi eng ko'p progressni (mehmon yoki lokal akkaunt) yangi akkauntga ko'chirish */
+      let best = guest;
+      for (let i = 0; i < localStorage.length; i++) { const k = localStorage.key(i); if (k && k.startsWith(LEGACY + "_") && k !== KEY) { const v = readLocal(k); if (v && (v.xp || 0) > ((best && best.xp) || 0)) best = v; } }
+      if (best) { local = best; localStorage.setItem("qn_guest_migrated", uid); }
+    }
     const pickCloud = cloud && (!local || (cloud.xp || 0) >= (local.xp || 0));
     S = hydrate(pickCloud ? cloud : local);
     try { localStorage.setItem(KEY, JSON.stringify(S)); } catch {}

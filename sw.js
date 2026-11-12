@@ -1,5 +1,5 @@
 /* Qalb Nuri — oflayn ishlash uchun service worker */
-const CACHE = "qalbnuri-v5";
+const CACHE = "qalbnuri-v6";
 const SHELL = [
   "./", "index.html", "manifest.json", "assets/css/style.css", "assets/img/icon.svg",
   "assets/js/app.js", "assets/js/auth.js", "assets/js/firebase-config.js", "assets/js/data/ismlar.js", "assets/js/views.js", "assets/js/data/core.js", "assets/js/data/lessons.js",

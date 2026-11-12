@@ -7,7 +7,15 @@
    shunda progress bulutda saqlanadi va istalgan qurilmadan
    kirish mumkin bo'ladi. (README.md → "Bulutli akkaunt")
    ========================================================= */
-window.QN_FIREBASE = null;
+window.QN_FIREBASE = {
+  apiKey: "AIzaSyCqA9-MMk3-8NXmCHzQO8DvXeBTvdcHNHM",
+  authDomain: "qalb-nuri.firebaseapp.com",
+  projectId: "qalb-nuri",
+  storageBucket: "qalb-nuri.firebasestorage.app",
+  messagingSenderId: "12908419173",
+  appId: "1:12908419173:web:33405421a3f4fc94f20e8c",
+  measurementId: "G-STKDWVC694",
+};
 /* Misol:
 window.QN_FIREBASE = {
   apiKey: "AIza...",
