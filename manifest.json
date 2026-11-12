@@ -1,0 +1,14 @@
+{
+  "name": "Qalb Nuri — Qur'on va Islom o'quv sayti",
+  "short_name": "Qalb Nuri",
+  "description": "Arab alifbosidan Qur'on hifzigacha: talaffuz, tajvid, namoz, duolar va hadislar.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f4fbf7",
+  "theme_color": "#0b6b50",
+  "lang": "uz",
+  "icons": [
+    { "src": "assets/img/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
+  ]
+}
