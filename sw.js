@@ -1,8 +1,8 @@
 /* Qalb Nuri — oflayn ishlash uchun service worker */
-const CACHE = "qalbnuri-v4";
+const CACHE = "qalbnuri-v5";
 const SHELL = [
   "./", "index.html", "manifest.json", "assets/css/style.css", "assets/img/icon.svg",
-  "assets/js/app.js", "assets/js/views.js", "assets/js/data/core.js", "assets/js/data/lessons.js",
+  "assets/js/app.js", "assets/js/auth.js", "assets/js/firebase-config.js", "assets/js/data/ismlar.js", "assets/js/views.js", "assets/js/data/core.js", "assets/js/data/lessons.js",
   "assets/js/data/ibodat.js", "assets/js/data/duas.js", "assets/js/data/hadith.js", "assets/js/data/names.js",
 ];
 self.addEventListener("install", (e) => { e.waitUntil(caches.open(CACHE).then((c) => c.addAll(SHELL)).then(() => self.skipWaiting())); });

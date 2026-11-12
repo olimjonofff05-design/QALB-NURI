@@ -17,7 +17,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Amiri+Quran&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="assets/css/style.css?v=4" />
+  <link rel="stylesheet" href="assets/css/style.css?v=5" />
 </head>
 <body>
   <div class="bg-pattern" aria-hidden="true"></div>
@@ -34,7 +34,7 @@
     <div class="side-progress">
       <div class="ring-sm" id="sideRing"></div>
       <div>
-        <div class="muted small">Umumiy yo'l</div>
+        <div class="muted small" id="sideName">Umumiy yo'l</div>
         <div class="side-level" id="sideLevel">1-daraja</div>
       </div>
     </div>
@@ -60,6 +60,7 @@
       <a href="#/sunnatlar" data-nav="sunnatlar"><span class="ni">🌿</span>Sunnatlar</a>
       <a href="#/tasbeh" data-nav="tasbeh"><span class="ni">📿</span>Tasbeh</a>
       <div class="nav-group">Boshqa</div>
+      <a href="#/profil" data-nav="profil"><span class="ni">👤</span>Profilim</a>
       <a href="#/sozlamalar" data-nav="sozlamalar"><span class="ni">⚙️</span>Sozlamalar</a>
     </nav>
     <button class="btn share-btn" id="shareBtn">🤝 Do'stlarga ulashish</button>
@@ -72,6 +73,7 @@
       <span class="chip" title="Ketma-ket kunlar">🔥 <b id="streakVal">0</b></span>
       <span class="chip" title="Tajriba ballari">⭐ <b id="xpVal">0</b></span>
       <span class="chip strong" title="Umumiy progress"><b id="pctVal">0%</b></span>
+      <a href="#/profil" class="avatar" id="avatar" title="Profil">?</a>
     </div>
   </header>
 
@@ -99,13 +101,16 @@
     </div>
   </div>
 
-  <script src="assets/js/data/core.js?v=4"></script>
-  <script src="assets/js/data/lessons.js?v=4"></script>
-  <script src="assets/js/data/ibodat.js?v=4"></script>
-  <script src="assets/js/data/duas.js?v=4"></script>
-  <script src="assets/js/data/hadith.js?v=4"></script>
-  <script src="assets/js/data/names.js?v=4"></script>
-  <script src="assets/js/app.js?v=4"></script>
-  <script src="assets/js/views.js?v=4"></script>
+  <script src="assets/js/data/core.js?v=5"></script>
+  <script src="assets/js/data/lessons.js?v=5"></script>
+  <script src="assets/js/data/ibodat.js?v=5"></script>
+  <script src="assets/js/data/duas.js?v=5"></script>
+  <script src="assets/js/data/hadith.js?v=5"></script>
+  <script src="assets/js/data/names.js?v=5"></script>
+  <script src="assets/js/data/ismlar.js?v=5"></script>
+  <script src="assets/js/firebase-config.js?v=5"></script>
+  <script src="assets/js/auth.js?v=5"></script>
+  <script src="assets/js/app.js?v=5"></script>
+  <script src="assets/js/views.js?v=5"></script>
 </body>
 </html>

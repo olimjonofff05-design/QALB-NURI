@@ -37,6 +37,19 @@ python3 -m http.server 8000
 
 Yoki GitHub Pages orqali: **Settings → Pages → Branch: `main` / root**.
 
+## 👤 Akkaunt va progress
+
+Kirishda foydalanuvchi **ism, telefon raqam (login), email va parol** bilan ro'yxatdan o'tadi va telefon raqami yoki emaili bilan kiradi. Har bir foydalanuvchining progressi avtomatik saqlanadi, kirgach esa ismining ma'nosi (arabcha yozilishi bilan) ko'rsatiladi.
+
+- **Hozirgi rejim:** akkaunt va progress foydalanuvchi qurilmasida saqlanadi.
+- **Bulutli rejim (Firebase)** — istalgan qurilmadan kirish va progressni bulutda saqlash:
+  1. [console.firebase.google.com](https://console.firebase.google.com) → yangi loyiha (`qalb-nuri`).
+  2. **Authentication → Sign-in method → Email/Password** ni yoqing. *(Keyinchalik **Phone** ni yoqib SMS kod bilan kirish qo'shiladi.)*
+  3. **Firestore Database** yarating va **Rules** bo'limiga `firestore.rules` faylidagi qoidalarni qo'ying.
+  4. **Project settings → Your apps → Web app** qo'shing, `firebaseConfig` ni nusxalang.
+  5. `assets/js/firebase-config.js` faylida `window.QN_FIREBASE = null;` o'rniga shu obyektni qo'ying.
+  6. **Authentication → Settings → Authorized domains** ga `olimjonofff05-design.github.io` ni qo'shing.
+
 ## 📚 Manbalar
 
 - Qur'on matni va transkripsiya — [AlQuran.cloud](https://alquran.cloud) (Islamic Network)

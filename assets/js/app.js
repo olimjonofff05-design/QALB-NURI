@@ -12,17 +12,31 @@
   const pick = (a) => a[Math.floor(Math.random() * a.length)];
 
   /* ---------------- Holat (localStorage) ---------------- */
-  const KEY = "qalbnuri_v1";
+  const LEGACY = "qalbnuri_v1";
+  let KEY = LEGACY;
   const blank = () => ({
     letters: {}, lessons: {}, read: {}, hifz: {}, ibodat: {}, duo: {}, hadis: {}, names: {}, sunnat: {},
     xp: 0, streak: { n: 0, last: "" }, daily: { d: "", n: 0 }, badges: {}, quizBest: {}, tasbeh: 0,
     settings: { reciter: "ar.husary", arScale: 1, dark: false, city: 0, method: 3, tr: true, translit: true, rate: 1, repeat: 1, voice: "auto" },
     lastRoute: "",
   });
-  let S;
-  try { S = Object.assign(blank(), JSON.parse(localStorage.getItem(KEY) || "{}")); S.settings = Object.assign(blank().settings, S.settings); }
-  catch { S = blank(); }
-  const save = () => { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch {} };
+  const hydrate = (o) => { const x = Object.assign(blank(), o || {}); x.settings = Object.assign(blank().settings, (o || {}).settings || {}); return x; };
+  const readLocal = (k) => { try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : null; } catch { return null; } };
+  let S = hydrate(readLocal(LEGACY));
+  const save = () => { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch {} window.QNauth?.pushState(S); };
+  /* Foydalanuvchi kirganda — uning shaxsiy progressini yuklash */
+  const setUser = (uid, cloud) => {
+    KEY = LEGACY + "_" + uid;
+    let local = readLocal(KEY);
+    const guest = readLocal(LEGACY);
+    if (!local && !cloud && guest && !localStorage.getItem("qn_guest_migrated")) { local = guest; localStorage.setItem("qn_guest_migrated", uid); }
+    const pickCloud = cloud && (!local || (cloud.xp || 0) >= (local.xp || 0));
+    S = hydrate(pickCloud ? cloud : local);
+    try { localStorage.setItem(KEY, JSON.stringify(S)); } catch {}
+    if (!pickCloud && local) window.QNauth?.pushState(S);
+    applySettings(); refreshShell();
+  };
+  const clearUser = () => { KEY = LEGACY; S = blank(); };
 
   /* ---------------- Toast & confetti ---------------- */
   let toastT;
@@ -115,6 +129,9 @@
     $("#streakVal").textContent = S.streak.n;
     const r = $("#sideRing"); r.style.setProperty("--p", p); r.innerHTML = `<span>${Math.floor(p)}%</span>`;
     $("#sideLevel").textContent = levelName(p);
+    const u = window.QNauth?.user, av = $("#avatar");
+    if (av) { av.textContent = u ? (u.name || "?").trim().charAt(0).toUpperCase() : "?"; av.title = u ? u.name : ""; }
+    const sn = $("#sideName"); if (sn) sn.textContent = u ? u.name : "";
   };
 
   /* ---------------- Sozlamalar qo'llash ---------------- */
@@ -259,7 +276,7 @@
   };
 
   /* ---------------- Eksport ---------------- */
-  window.QNapp = { $, $$, esc, arDigits, todayStr, dayOfYear, shuffle, pick, S: () => S, save, toast, confetti, award, toggle, cnt,
+  window.QNapp = { setUser, clearUser, $, $$, esc, arDigits, todayStr, dayOfYear, shuffle, pick, S: () => S, save, toast, confetti, award, toggle, cnt,
     modPct, totalPct, levelName, badgesDef, hifzUnits, lessonsOf, refreshShell, applySettings, speak, playAyahs, stopAll, audio, P,
     recToggle, loadSurah, stopSpeech: () => { ttsAudio.pause(); if ("speechSynthesis" in window) speechSynthesis.cancel(); }, ayahUrl, reset: () => { S = blank(); save(); }, importState: (o) => { S = Object.assign(blank(), o); S.settings = Object.assign(blank().settings, o.settings || {}); save(); } };
 })();

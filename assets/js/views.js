@@ -132,7 +132,7 @@
     app.innerHTML = `<div class="view stack">
       <section class="hero"><div class="hero-grid">
         <div>
-          <div class="pill gold">Assalomu alaykum! ${greet}</div>
+          <div class="pill gold">Assalomu alaykum${Au().user ? ", " + esc(nameInfo(Au().user.name).first) : ""}! ${greet}</div>
           <h1 style="margin-top:12px">Qalbingizga Qur'on nurini olib kiring</h1>
           <p>Arab alifbosining birinchi harfidan boshlab, suralarni to'liq o'qish va yodlashgacha — qadam-baqadam, o'z tezligingizda. Har bir harf uchun ajr bor!</p>
           <div class="ar-big">اقْرَأْ بِاسْمِ رَبِّكَ الَّذِي خَلَقَ</div>
@@ -800,6 +800,124 @@
     $("#rs").onclick = () => { if (confirm("Barcha progress o'chiriladi. Ishonchingiz komilmi?")) { A.reset(); A.applySettings(); A.refreshShell(); toast("Progress tozalandi."); viewSettings(); } };
   };
 
+
+  /* =========================================================
+     AKKAUNT: KIRISH / RO'YXATDAN O'TISH / XUSH KELIBSIZ / PROFIL
+     ========================================================= */
+  const Au = () => window.QNauth;
+  const fmtPhone = (d) => { d = String(d || "").replace(/\D/g, ""); if (d.startsWith("998") && d.length === 12) return `+998 ${d.slice(3, 5)} ${d.slice(5, 8)} ${d.slice(8, 10)} ${d.slice(10)}`; return d ? "+" + d : ""; };
+  const phoneMask = (inp) => inp.addEventListener("input", () => {
+    let d = inp.value.replace(/\D/g, ""); if (!d.startsWith("998")) d = "998" + d;
+    d = d.slice(0, 12); const p = [d.slice(0, 3), d.slice(3, 5), d.slice(5, 8), d.slice(8, 10), d.slice(10, 12)].filter(Boolean);
+    inp.value = "+" + p.join(" ");
+  });
+  const nameInfo = (name) => {
+    const first = String(name || "").trim().split(/\s+/)[0] || "";
+    const f = QN.ismTop(first);
+    return f ? { first, ar: f.d[0], origin: QN.ismOrigin[f.d[1]], mean: f.d[2], note: f.d[3], key: f.key } : { first, ar: "", origin: "", mean: "", note: "" };
+  };
+  const nameHero = (name, big = true) => {
+    const n = nameInfo(name);
+    return `<div class="name-hero"><div class="orn"></div>
+      <div class="pill gold">Ismingiz ma'nosi</div>
+      ${n.ar ? `<div class="nm-ar">${n.ar}</div>` : `<div class="nm-ar">نُورُ الْقَلْب</div>`}
+      <h1 class="nm">${esc(n.first)}</h1>
+      ${n.origin ? `<div class="small" style="opacity:.85;margin-top:4px">${n.origin}</div>` : ""}
+      <p class="mean">${n.mean ? `«${esc(n.mean)}»` : "Har bir ism — duo. Ismingiz egasiga yaxshilik, baraka va nur olib kelsin!"}</p>
+      ${n.note ? `<p class="small" style="color:rgba(255,255,255,.9);max-width:560px;margin:10px auto 0">✨ ${esc(n.note)}</p>` : ""}
+      ${big ? `<p class="small" style="color:rgba(255,255,255,.85);max-width:560px;margin:14px auto 0">Payg'ambarimiz ﷺ farzandlarga chiroyli ism qo'yishni buyurganlar. Ism — insonning birinchi duosidir.</p>` : ""}
+    </div>`;
+  };
+
+  const viewAuth = (tab = "kirish") => {
+    document.body.classList.add("auth");
+    const reg = tab === "royxat";
+    const cloud = Au().mode === "cloud";
+    app.innerHTML = `<div class="auth-wrap view">
+      <div class="auth-art">
+        <a class="brand" href="#/kirish" style="color:#fff !important"><img src="assets/img/icon.svg" alt="" class="brand-logo"/><div><div class="brand-name">Qalb Nuri</div><div class="brand-ar" style="color:var(--gold-soft)">نُورُ الْقَلْب</div></div></a>
+        <div style="position:relative;z-index:1;margin:26px 0">
+          <h1>Arab alifbosidan<br/>Qur'on hifzigacha</h1>
+          <p class="hide-m">Alifbo, talaffuz, tajvid, Qur'on o'qish va yodlash, namoz, duolar, hadislar — barchasi bitta joyda. Progressingiz akkauntingizda saqlanadi.</p>
+          <div class="ar-big">خَيْرُكُمْ مَنْ تَعَلَّمَ الْقُرْآنَ وَعَلَّمَهُ</div>
+          <p class="small">«Sizlarning eng yaxshilaringiz Qur'onni o'rgangan va o'rgatganlaringizdir» (Buxoriy)</p>
+        </div>
+        <div class="row hide-m" style="position:relative;z-index:1"><span class="pill gold">📖 28 harf</span><span class="pill gold">🎼 Tajvid</span><span class="pill gold">📗 114 sura</span><span class="pill gold">🕌 Namoz</span></div>
+      </div>
+      <div class="auth-form"><div class="auth-card">
+        <div class="tabs" style="width:100%;margin-bottom:18px"><button data-t="kirish" class="${reg ? "" : "on"}" style="flex:1">Kirish</button><button data-t="royxat" class="${reg ? "on" : ""}" style="flex:1">Ro'yxatdan o'tish</button></div>
+        <h2>${reg ? "Akkaunt yaratish" : "Xush kelibsiz!"}</h2>
+        <p class="small">${reg ? "Ismingiz, telefon raqamingiz va emailingizni kiriting." : "Telefon raqamingiz yoki emailingiz bilan kiring."}</p>
+        <form id="af" autocomplete="on">
+          ${reg ? `<div class="field"><label>Ismingiz</label><input id="fName" type="text" autocomplete="given-name" placeholder="Masalan: Abdulloh" required/></div>
+          <div class="field"><label>Telefon raqam</label><input id="fPhone" type="tel" inputmode="tel" autocomplete="tel" placeholder="+998 90 123 45 67" value="+998 " required/></div>
+          <div class="field"><label>Email</label><input id="fEmail" type="email" inputmode="email" autocomplete="email" placeholder="ism@gmail.com" required/></div>`
+          : `<div class="field"><label>Telefon raqam yoki email</label><input id="fId" type="text" autocomplete="username" placeholder="+998 90 123 45 67 yoki email" required/></div>`}
+          <div class="field"><label>Parol</label><input id="fPass" type="password" autocomplete="${reg ? "new-password" : "current-password"}" placeholder="Kamida 6 belgi" required/></div>
+          <div class="err" id="ferr"></div>
+          <button class="btn" type="submit" id="fbtn">${reg ? "Ro'yxatdan o'tish" : "Kirish"}</button>
+        </form>
+        ${reg ? "" : `<div class="center" style="margin-top:10px"><button class="link-btn" id="forgot">Parolni unutdingizmi?</button></div>`}
+        <p class="small muted center" style="margin-top:16px">${cloud ? "🔒 Progressingiz bulutda saqlanadi — istalgan qurilmadan kirishingiz mumkin." : "🔒 Akkaunt va progress shu qurilmada xavfsiz saqlanadi."}<br/>Kelajakda telefon raqamga SMS kod orqali kirish qo'shiladi.</p>
+      </div></div></div>`;
+    $$("[data-t]").forEach((b) => (b.onclick = () => (location.hash = "#/" + b.dataset.t)));
+    if (reg) phoneMask($("#fPhone"));
+    const fe = $("#ferr");
+    $("#af").onsubmit = async (e) => {
+      e.preventDefault(); fe.textContent = ""; const btn = $("#fbtn"); btn.disabled = true; btn.textContent = "⏳ Kutib turing…";
+      try {
+        const u = reg ? await Au().register({ name: $("#fName").value, phone: $("#fPhone").value, email: $("#fEmail").value, password: $("#fPass").value })
+                      : await Au().login($("#fId").value, $("#fPass").value);
+        A.setUser(u.uid, await Au().pullState());
+        location.hash = "#/xush";
+      } catch (er) { fe.textContent = er.uz || "Xatolik yuz berdi."; btn.disabled = false; btn.textContent = reg ? "Ro'yxatdan o'tish" : "Kirish"; }
+    };
+    $("#forgot") && ($("#forgot").onclick = async () => {
+      const v = $("#fId").value.trim();
+      try { await Au().resetPassword(v); toast("📧 Parolni tiklash havolasi emailingizga yuborildi."); } catch (er) { fe.textContent = er.uz; }
+    });
+  };
+
+  const viewWelcome = () => {
+    const u = Au().user; if (!u) return (location.hash = "#/kirish");
+    document.body.classList.add("auth");
+    const hr = new Date().getHours();
+    app.innerHTML = `<div class="welcome"><div class="welcome-in stack">
+      <div class="center"><img src="assets/img/icon.svg" alt="" style="width:64px;height:64px;border-radius:18px;box-shadow:var(--shadow)"/>
+        <h2 style="margin-top:14px">Assalomu alaykum, ${esc(nameInfo(u.name).first)}!</h2>
+        <p>${hr < 11 ? "Xayrli tong" : hr < 17 ? "Xayrli kun" : "Xayrli kech"}. Qalb Nuri oilasiga xush kelibsiz.</p></div>
+      ${nameHero(u.name)}
+      <div class="card center"><div class="dua-ar" style="text-align:center">رَبِّ زِدْنِي عِلْمًا</div><p class="small" style="margin:0">«Robbim, ilmimni ziyoda qil» (Toha, 114) — har bir darsni shu duo bilan boshlang.</p></div>
+      <a class="btn" href="#/" style="padding:16px;font-size:1.05rem">Bismillah — o'qishni boshlash ▶</a>
+    </div></div>`;
+    A.confetti(70);
+  };
+
+  const viewProfile = () => {
+    const u = Au().user, s = S();
+    const cloud = Au().mode === "cloud";
+    app.innerHTML = `<div class="view stack" style="max-width:820px">
+      <h1>👤 Profilim</h1>
+      ${nameHero(u.name, false)}
+      <div class="grid g3">
+        <div class="card center"><div style="font-size:1.8rem;font-weight:800;color:var(--g-700)">${Math.floor(A.totalPct())}%</div><div class="small muted">umumiy yo'l</div></div>
+        <div class="card center"><div style="font-size:1.8rem;font-weight:800;color:var(--g-700)">⭐ ${s.xp}</div><div class="small muted">ball</div></div>
+        <div class="card center"><div style="font-size:1.8rem;font-weight:800;color:var(--g-700)">🔥 ${s.streak.n}</div><div class="small muted">kun ketma-ket</div></div>
+      </div>
+      <div class="card"><h3>Ma'lumotlarim</h3>
+        <div class="field"><label>Ism</label><input id="pName" type="text" value="${esc(u.name)}"/></div>
+        <div class="field"><label>Telefon raqam (login)</label><input id="pPhone" type="tel" value="${esc(fmtPhone(u.phone))}"/></div>
+        <div class="field"><label>Email</label><input type="email" value="${esc(u.email)}" disabled/></div>
+        <div class="err" id="perr"></div>
+        <button class="btn" id="pSave">Saqlash</button></div>
+      <div class="card"><h3>☁️ Progress saqlanishi</h3><p class="small" style="margin:0">${cloud ? "Progressingiz har bir harakatdan so'ng avtomatik ravishda bulutga saqlanadi. Boshqa telefon yoki kompyuterdan kirsangiz — hammasi joyida bo'ladi." : "Progressingiz har bir harakatdan so'ng avtomatik ravishda shu qurilmada, akkauntingizga bog'lab saqlanadi. Boshqa qurilmaga o'tkazish uchun Sozlamalar → Eksport."}</p></div>
+      <button class="btn ghost" id="logout" style="color:#b03a2e">⎋ Akkauntdan chiqish</button>
+    </div>`;
+    phoneMask($("#pPhone"));
+    $("#pSave").onclick = async () => { try { await Au().updateProfile({ name: $("#pName").value, phone: $("#pPhone").value }); A.refreshShell(); toast("Saqlandi ✅"); viewProfile(); } catch (er) { $("#perr").textContent = er.uz || "Xatolik"; } };
+    $("#logout").onclick = async () => { await Au().logout(); A.clearUser(); location.hash = "#/kirish"; };
+  };
+
   /* =========================================================
      ROUTER
      ========================================================= */
@@ -824,11 +942,17 @@
     [/^#\/sunnatlar$/, viewSunnah, "sunnatlar"],
     [/^#\/tasbeh$/, viewTasbeh, "tasbeh"],
     [/^#\/sozlamalar$/, viewSettings, "sozlamalar"],
+    [/^#\/profil$/, viewProfile, "profil"],
+    [/^#\/xush$/, viewWelcome, "home"],
   ];
+  const publicRoutes = /^#\/(kirish|royxat)$/;
   const route = () => {
     cleanups.forEach((f) => f()); cleanups = [];
     A.stopSpeech();
     const h = location.hash || "#/";
+    if (!Au().user) { const m = h.match(publicRoutes); return viewAuth(m ? m[1] : "kirish"); }
+    if (publicRoutes.test(h)) { location.hash = "#/"; return; }
+    document.body.classList.remove("auth");
     for (const [re, fn, nav] of routes) {
       const m = h.match(re);
       if (m) {
@@ -855,6 +979,7 @@
   };
   $("#shareBtn").onclick = share;
   document.addEventListener("click", (e) => { if (e.target.closest("[data-share]")) share(); });
-  route();
+  app.innerHTML = `<div class="spinner" style="margin-top:30vh"></div>`;
+  Au().init().then(async (u) => { if (u) A.setUser(u.uid, await Au().pullState()); route(); A.refreshShell(); });
   if ("serviceWorker" in navigator && location.protocol === "https:") navigator.serviceWorker.register("sw.js").catch(() => {});
 })();
