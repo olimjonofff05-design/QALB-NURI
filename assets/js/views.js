@@ -13,8 +13,8 @@
 
   /* ---------------- Kichik komponentlar ---------------- */
   const bar = (p, cls = "") => `<div class="bar ${cls}"><i style="width:${Math.round(p * 100)}%"></i></div>`;
-  const say = (text, cls = "play sm", label = "🔊") => `<button class="${cls}" data-say="${esc(text)}" title="Tinglash">${label}</button>`;
-  const recPair = () => `<button class="btn rec sm" data-rec>🎙 Yozib olish</button><button class="btn ghost sm" data-recplay hidden>▶ Ovozim</button>`;
+  const say = (text, cls = "play sm", label = QN.ic("speaker")) => `<button class="${cls}" data-say="${esc(text)}" title="Tinglash">${label}</button>`;
+  const recPair = () => `<button class="btn rec sm" data-rec>${QN.ic("mic")} Yozib olish</button><button class="btn ghost sm" data-recplay hidden>${QN.ic("play")} Ovozim</button>`;
   const doneBtn = (on, attrs, onTxt = "✅ O'rgandim", offTxt = "☐ O'rgandim deb belgilash") => `<button class="btn sm ${on ? "done" : ""}" ${attrs}>${on ? onTxt : offTxt}</button>`;
   const back = (href, txt) => `<a class="btn ghost sm" href="${href}">← ${txt}</a>`;
   const forms = (L) => L.j ? [L.c, L.c + ZWJ, ZWJ + L.c + ZWJ, ZWJ + L.c] : [L.c, L.c, ZWJ + L.c, ZWJ + L.c];
@@ -139,7 +139,7 @@
           <p class="small" style="opacity:.85;margin-top:-4px">«Yaratgan Robbing nomi bilan o'qi!» — Alaq, 1</p>
           <div class="row" style="margin-top:14px">
             <a class="btn" href="${nx.route}">▶ ${p > 0 ? "Davom ettirish" : "O'qishni boshlash"}</a>
-            <a class="btn ghost" href="#/yol">🧭 O'quv yo'li</a>
+            <a class="btn ghost" href="#/yol">${QN.ic("compass")} O'quv yo'li</a>
           </div>
           <p class="small" style="margin-top:10px;opacity:.9">Keyingi qadam: <b>${esc(nx.label)}</b></p>
         </div>
@@ -152,23 +152,23 @@
       </div></section>
 
       <div class="grid g3">
-        <div class="card"><div class="row between"><h3>🎯 Bugungi maqsad</h3><span class="pill">${Math.min(dailyN, 5)}/5</span></div>
+        <div class="card"><div class="row between"><h3 class="h3i">${QN.ic("target")}Bugungi maqsad</h3><span class="pill">${Math.min(dailyN, 5)}/5</span></div>
           <p class="small">Har kuni kamida 5 ta amal: harf, dars, oyat, duo yoki hadis. Oz bo'lsa ham — doimiy!</p>${bar(Math.min(1, dailyN / 5), "gold")}</div>
-        <div class="card daily"><div class="row between"><h3>📜 Kun hadisi</h3>${say(dh.ar)}</div><div class="q">${dh.ar}</div><p class="small">${esc(dh.m)}</p><div class="src">${dh.src}</div></div>
-        <div class="card daily"><div class="row between"><h3>🤲 Kun duosi</h3>${say(dd.ar)}</div><div class="small muted">${esc(dd.t)}</div><div class="q">${dd.ar}</div><p class="small translit">${esc(dd.tr)}</p></div>
+        <div class="card daily"><div class="row between"><h3 class="h3i">${QN.ic("scroll")}Kun hadisi</h3>${say(dh.ar)}</div><div class="q">${dh.ar}</div><p class="small">${esc(dh.m)}</p><div class="src">${dh.src}</div></div>
+        <div class="card daily"><div class="row between"><h3 class="h3i">${QN.ic("hands")}Kun duosi</h3>${say(dd.ar)}</div><div class="small muted">${esc(dd.t)}</div><div class="q">${dd.ar}</div><p class="small translit">${esc(dd.tr)}</p></div>
       </div>
 
       <div class="sec"><h2>O'quv modullari</h2><a href="#/yol" class="small">Barchasini ko'rish →</a></div>
       <div class="grid g4">${QN.modules.map((m) => { const mp = A.modPct(m.id); return `
         <a class="card hover" href="${m.route}" style="color:inherit">
-          <div class="row between"><span style="font-size:1.6rem" class="${m.icon.length < 3 ? "ar" : ""}">${m.icon}</span><span class="pill">${Math.round(mp * 100)}%</span></div>
+          <div class="row between"><span class="mod-ic">${QN.ic(m.ic)}</span><span class="pill">${Math.round(mp * 100)}%</span></div>
           <h3 style="margin-top:10px">${m.title}</h3><p class="small">${m.desc}</p>${bar(mp)}
         </a>`; }).join("")}</div>
 
       <div class="sec"><h2>Nishonlar</h2><span class="muted small">${Object.keys(s.badges).length}/${A.badgesDef.length}</span></div>
       <div class="grid g4">${A.badgesDef.map((b) => `<div class="card flat badge-ach ${s.badges[b.id] ? "on" : ""}"><div class="e">${b.e}</div><b>${b.t}</b><div class="muted small">${b.d}</div></div>`).join("")}</div>
 
-      <div class="card" style="margin-top:10px"><div class="row between"><div><h3>🤝 Yaxshilikka yo'l ko'rsating</h3><p class="small" style="margin:0">«Kim bir yaxshilikka yo'l ko'rsatsa, unga uni qilganning ajricha ajr bor» (Muslim). Saytni yaqinlaringizga ulashing.</p></div><button class="btn gold" data-share>Ulashish</button></div></div>
+      <div class="card" style="margin-top:10px"><div class="row between"><div><h3 class="h3i">${QN.ic("share")}Yaxshilikka yo'l ko'rsating</h3><p class="small" style="margin:0">«Kim bir yaxshilikka yo'l ko'rsatsa, unga uni qilganning ajricha ajr bor» (Muslim). Saytni yaqinlaringizga ulashing.</p></div><button class="btn gold" data-share>Ulashish</button></div></div>
     </div>`;
   };
 
@@ -178,11 +178,11 @@
   const viewPath = () => {
     const nx = nextStep();
     app.innerHTML = `<div class="view stack">
-      <div><h1>🧭 O'quv yo'li: 0% → 100%</h1><p>Har bir bosqich umumiy progressga ma'lum ulush qo'shadi. Tavsiya etilgan tartibda boring — har bir bosqich keyingisi uchun poydevor.</p></div>
+      <div><h1 class="ttl"><span class="ttl-ic">${QN.ic("compass")}</span>O'quv yo'li: 0% → 100%</h1><p>Har bir bosqich umumiy progressga ma'lum ulush qo'shadi. Tavsiya etilgan tartibda boring — har bir bosqich keyingisi uchun poydevor.</p></div>
       <div class="card"><div class="row between"><b>Umumiy progress</b><b>${A.totalPct().toFixed(1)}%</b></div><div style="margin-top:8px">${bar(A.totalPct() / 100)}</div></div>
       <div class="path">${QN.modules.map((m, i) => { const mp = A.modPct(m.id); const cur = nx.m && nx.m.id === m.id; return `
         <div class="card step ${mp >= 1 ? "done" : ""} ${cur ? "cur" : ""}">
-          <div class="step-badge ${m.icon.length < 3 ? "ar" : ""}">${mp >= 1 ? "✓" : m.icon}</div>
+          <div class="step-badge">${QN.ic(mp >= 1 ? "check" : m.ic)}</div>
           <div><div class="row"><span class="pill">${i + 1}-bosqich</span><span class="muted small">umumiy yo'lning ${m.w}%</span></div>
             <h3 style="margin:6px 0 2px">${m.title}</h3><p class="small" style="margin:0 0 8px">${m.desc}</p>${bar(mp)}</div>
           <a class="btn ${cur ? "" : "ghost"} sm" href="${cur ? nx.route : m.route}">${mp >= 1 ? "Takrorlash" : cur ? "Davom etish ▶" : "Ochish"}</a>
@@ -221,16 +221,16 @@
           <div class="big-letter">${L.c}</div>
           <h2>${L.n} <span class="ar" style="color:var(--g-600)">${L.ar}</span></h2>
           <div class="row" style="justify-content:center;margin:10px 0">
-            ${say(L.ar, "btn", "🔊 Nomini tinglash")}
-            ${say((L.c === "ا" ? "أ" : L.c) + H.fatha, "btn ghost", "🔊 Tovushi")}
+            ${say(L.ar, "btn", QN.ic("speaker") + " Nomini tinglash")}
+            ${say((L.c === "ا" ? "أ" : L.c) + H.fatha, "btn ghost", QN.ic("speaker") + " Tovushi")}
           </div>
           <div class="row" style="justify-content:center">${recPair()}</div>
           <p class="small muted" style="margin-top:10px">Tinglang → o'zingizni yozib oling → solishtiring. 5–10 marta takrorlang.</p>
         </div>
         <div class="card stack">
-          <div><h3>🗣 Talaffuz</h3><p>${esc(L.s)}</p></div>
-          <div><h3>📍 Maxraj (chiqish joyi)</h3><p>${esc(L.mx)}</p></div>
-          <div><h3>✍️ Qanday yoziladi</h3><p>${esc(L.w)}</p></div>
+          <div><h3 class="h3i">${QN.ic("speaker")}Talaffuz</h3><p>${esc(L.s)}</p></div>
+          <div><h3 class="h3i">${QN.ic("target")}Maxraj (chiqish joyi)</h3><p>${esc(L.mx)}</p></div>
+          <div><h3 class="h3i">${QN.ic("pen")}Qanday yoziladi</h3><p>${esc(L.w)}</p></div>
           <div class="row between"><div><div class="dua-ar" style="font-size:2.2rem">${L.ex[0]}</div><span class="translit">${L.ex[1]}</span> — <span class="muted">${L.ex[2]}</span></div>${say(L.ex[0])}</div>
         </div>
       </div>
@@ -248,7 +248,7 @@
 
       <div class="card"><h3>Harakatlar bilan o'qing</h3><p class="small">Har birini bosib tinglang va ovoz chiqarib takrorlang.</p>${sylGrid(sylls)}</div>
 
-      <div class="card"><div class="row between"><div><h3>📓 Daftar mashqi</h3><p class="small" style="margin:0">Daftaringizga bu harfni 4 shaklida kamida 3 qatordan yozing. Yozayotganda ovoz chiqarib nomini ayting.</p></div>
+      <div class="card"><div class="row between"><div><h3 class="h3i">${QN.ic("book")}Daftar mashqi</h3><p class="small" style="margin:0">Daftaringizga bu harfni 4 shaklida kamida 3 qatordan yozing. Yozayotganda ovoz chiqarib nomini ayting.</p></div>
         ${doneBtn(s.letters[i], `id="learn"`, "✅ O'rganildi", "✔ O'rgandim")}</div></div>
     </div>`;
     const stage = app; setTimeout(() => animate(stage), 200);
@@ -268,7 +268,7 @@
   const modTitles = { harf: "Harf shakllari va belgilar", harakat: "Harakatlar", oqish: "O'qishni boshlash", tajvid: "Tajvid asoslari" };
   const viewLessons = () => {
     const s = S();
-    app.innerHTML = `<div class="view stack"><div><h1>📖 Darslar va tajvid</h1><p>Alifbodan keyin harakatlar, so'ng o'qish va tajvid. Har bir darsda tinglash, takrorlash va yozib olish bor.</p></div>
+    app.innerHTML = `<div class="view stack"><div><h1 class="ttl"><span class="ttl-ic">${QN.ic("layers")}</span>Darslar va tajvid</h1><p>Alifbodan keyin harakatlar, so'ng o'qish va tajvid. Har bir darsda tinglash, takrorlash va yozib olish bor.</p></div>
       ${Object.entries(modTitles).map(([mod, t]) => `
         <div class="sec"><h2>${t}</h2><span class="pill">${Math.round(A.modPct(mod) * 100)}%</span></div>
         <div class="grid gauto">${A.lessonsOf(mod).map((l) => `
@@ -330,7 +330,7 @@
   const viewWriting = (i = 1) => {
     i = +i || 0; const L = QN.letters[i] || QN.letters[1], f = forms(L);
     app.innerHTML = `<div class="view stack">
-      <div><h1>✍️ Yozuv mashqi</h1><p>Harfni tanlang → yozilishini kuzating → ekranda barmoq/sichqoncha bilan chizing → so'ng <b>daftaringizga</b> yozing.</p></div>
+      <div><h1 class="ttl"><span class="ttl-ic">${QN.ic("pen")}</span>Yozuv mashqi</h1><p>Harfni tanlang → yozilishini kuzating → ekranda barmoq/sichqoncha bilan chizing → so'ng <b>daftaringizga</b> yozing.</p></div>
       <div class="card"><div class="row" style="gap:6px">${QN.letters.map((x, k) => `<a class="btn ${k === i ? "" : "ghost"} sm ar" style="font-size:1.3rem;min-width:46px" href="#/yozuv/${k}">${x.c}</a>`).join("")}</div></div>
       <div class="grid g2">
         <div class="card"><div class="row between"><h3>${L.n} — yozilishi</h3><button class="btn ghost sm" id="reAnim">↻ Qayta</button></div>${writeStage(L.c, 190)}<p class="small" style="margin-top:8px">${esc(L.w)}</p>
@@ -338,7 +338,7 @@
         <div class="card"><div class="row between"><h3>Chizish maydoni</h3><div class="row"><button class="btn ghost sm" id="trG">👁 Namuna</button><button class="btn ghost sm" id="trC">🧽 Tozalash</button></div></div>
           <div class="trace-wrap" id="trace"><canvas></canvas></div><p class="small muted" style="margin-top:8px">Shaklni o'zgartirish uchun chapdagi shakllardan birini bosing.</p></div>
       </div>
-      <div class="card"><h3>📓 Daftar uchun maslahatlar</h3><ol class="list">
+      <div class="card"><h3 class="h3i">${QN.ic("book")}Daftar uchun maslahatlar</h3><ol class="list">
         <li>Katakli yoki chiziqli daftar oling. Har sahifaning <b>o'ng tomonidan</b> boshlang.</li>
         <li>Har bir harfni avval katta (3–4 katak), so'ng odatiy o'lchamda yozing.</li>
         <li>Ketma-ketlik: 1 qator alohida shakl → 1 qator boshlang'ich → 1 qator o'rta → 1 qator oxirgi shakl.</li>
@@ -393,7 +393,7 @@
   const viewQuiz = (id) => {
     const s = S();
     if (!id || !quizzes[id]) {
-      app.innerHTML = `<div class="view stack"><div><h1>🎯 Sinovlar</h1><p>O'rganganlaringizni mustahkamlang. Har bir to'g'ri javob uchun ball olasiz.</p></div>
+      app.innerHTML = `<div class="view stack"><div><h1 class="ttl"><span class="ttl-ic">${QN.ic("target")}</span>Sinovlar</h1><p>O'rganganlaringizni mustahkamlang. Har bir to'g'ri javob uchun ball olasiz.</p></div>
         <div class="grid gauto">${Object.entries(quizzes).map(([k, q]) => `<a class="card hover" href="#/sinov/${k}" style="color:inherit"><div style="font-size:2rem" class="ar">${q.e}</div><h3 style="margin-top:8px">${q.t}</h3><p class="small">${q.d}</p>${s.quizBest[k] != null ? `<span class="pill">Eng yaxshi: ${s.quizBest[k]}/10</span>` : `<span class="pill gold">Yangi</span>`}</a>`).join("")}</div></div>`;
       return;
     }
@@ -443,7 +443,7 @@
       $$("[data-qf]").forEach((b) => b.classList.toggle("on", b.dataset.qf === filter));
     };
     app.innerHTML = `<div class="view stack">
-      <div class="row between"><div><h1>📗 Qur'oni Karim</h1><p>114 sura — arabcha matn, lotin transkripsiyasi, o'zbekcha ma'no tarjimasi va qori ovozida tilovat.</p></div>
+      <div class="row between"><div><h1 class="ttl"><span class="ttl-ic">${QN.ic("quran")}</span>Qur'oni Karim</h1><p>114 sura — arabcha matn, lotin transkripsiyasi, o'zbekcha ma'no tarjimasi va qori ovozida tilovat.</p></div>
         <div class="card flat" style="padding:14px 18px"><b>O'qish rejasi:</b> ${QN.readPlan.filter((n) => s.read[n]).length}/${QN.readPlan.length}<div style="width:200px;margin-top:6px">${bar(A.modPct("quron"))}</div></div></div>
       <div class="row between"><div class="tabs"><button data-qf="plan">O'qish rejasi (30-pora)</button><button data-qf="all">Barcha 114 sura</button><button data-qf="hifz">Yodlanayotganlar</button></div>
         <input type="search" id="sq" placeholder="🔎 Sura nomi yoki raqami…" style="min-width:240px" /></div>
@@ -541,14 +541,14 @@
     const review = done.length ? done[A.dayOfYear() % done.length] : null;
     const totalA = Object.keys(S().hifz).length;
     app.innerHTML = `<div class="view stack">
-      <div class="row between"><div><h1>💚 Hifz — Qur'onni yodlash</h1><p>Namozda o'qish uchun eng zarur suralardan boshlaymiz. Har bir oyatni alohida yodlab, belgilab boring.</p></div>
+      <div class="row between"><div><h1 class="ttl"><span class="ttl-ic">${QN.ic("heart")}</span>Hifz — Qur'onni yodlash</h1><p>Namozda o'qish uchun eng zarur suralardan boshlaymiz. Har bir oyatni alohida yodlab, belgilab boring.</p></div>
         <div class="card flat center" style="padding:14px 22px"><div style="font-size:1.8rem;font-weight:800;color:var(--g-700)">${done.length}/${units.length}</div><div class="small muted">sura yodlandi · ${totalA} oyat</div></div></div>
       <div class="grid g3">
-        <div class="card"><h3>🎧 1. Tinglash</h3><p class="small">Oyatni qori ovozida 5–7 marta takror tinglang. Husariy qiroati o'rganish uchun eng qulay.</p></div>
-        <div class="card"><h3>👁 2. Ko'rib o'qish</h3><p class="small">Matnga qarab ovoz chiqarib 3 marta o'qing, o'zingizni yozib oling va solishtiring.</p></div>
-        <div class="card"><h3>🧠 3. Yashirib aytish</h3><p class="small">Matnni yashiring, eslab ayting. Unutsangiz — so'zni bosib ko'ring. So'ng ✓ belgilang.</p></div>
+        <div class="card"><h3 class="h3i">${QN.ic("speaker")}1. Tinglash</h3><p class="small">Oyatni qori ovozida 5–7 marta takror tinglang. Husariy qiroati o'rganish uchun eng qulay.</p></div>
+        <div class="card"><h3 class="h3i">${QN.ic("book")}2. Ko'rib o'qish</h3><p class="small">Matnga qarab ovoz chiqarib 3 marta o'qing, o'zingizni yozib oling va solishtiring.</p></div>
+        <div class="card"><h3 class="h3i">${QN.ic("heart")}3. Yashirib aytish</h3><p class="small">Matnni yashiring, eslab ayting. Unutsangiz — so'zni bosib ko'ring. So'ng ✓ belgilang.</p></div>
       </div>
-      ${review ? `<div class="card row between"><div><h3>🔁 Bugungi takrorlash</h3><p class="small" style="margin:0">Yodlanganlar unutilmasligi uchun: bugun <b>${review.name}</b> surasini takrorlang.</p></div><a class="btn" href="#/quron/${review.s}/hifz${review.from > 1 ? `/${review.from}/${review.to}` : ""}">Takrorlash</a></div>` : ""}
+      ${review ? `<div class="card row between"><div><h3 class="h3i">${QN.ic("calendar")}Bugungi takrorlash</h3><p class="small" style="margin:0">Yodlanganlar unutilmasligi uchun: bugun <b>${review.name}</b> surasini takrorlang.</p></div><a class="btn" href="#/quron/${review.s}/hifz${review.from > 1 ? `/${review.from}/${review.to}` : ""}">Takrorlash</a></div>` : ""}
       <div class="grid g2">${units.map((u, k) => `
         <a class="card hover" href="#/quron/${u.s}/hifz${u.from > 1 || u.to < QN.surahs[u.s - 1][2] ? `/${u.from}/${u.to}` : ""}" style="color:inherit">
           <div class="row between"><div class="row"><span class="pill">${k + 1}</span><b>${u.name}</b></div><span class="surah-ar" style="font-size:1.3rem">${QN.surahs[u.s - 1][0]}</span></div>
@@ -566,9 +566,9 @@
     const s = S();
     if (!id) {
       app.innerHTML = `<div class="view stack">
-        <div><h1>🕌 Namoz</h1><p>Iymon asoslaridan boshlab tahorat, namoz o'qish tartibi, duolari va vitrgacha. Hanafiy mazhabi asosida.</p></div>
+        <div><h1 class="ttl"><span class="ttl-ic">${QN.ic("mosque")}</span>Namoz</h1><p>Iymon asoslaridan boshlab tahorat, namoz o'qish tartibi, duolari va vitrgacha. Hanafiy mazhabi asosida.</p></div>
         <div class="card"><div class="row between"><b>Ibodat darslari</b><span class="pill">${Math.round(A.modPct("ibodat") * 100)}%</span></div><div style="margin-top:8px">${bar(A.modPct("ibodat"))}</div></div>
-        <div class="grid gauto">${QN.ibodatLessons.map((l, k) => `<a class="card hover" href="#/namoz/${l.id}" style="color:inherit"><div class="row between"><span style="font-size:1.8rem">${l.icon}</span>${s.ibodat[l.id] ? '<span class="pill">✓</span>' : `<span class="pill gold">${k + 1}</span>`}</div><h3 style="margin-top:8px">${l.title}</h3></a>`).join("")}</div>
+        <div class="grid gauto">${QN.ibodatLessons.map((l, k) => `<a class="card hover" href="#/namoz/${l.id}" style="color:inherit"><div class="row between"><span class="mod-ic">${QN.ic(l.ic)}</span>${s.ibodat[l.id] ? '<span class="pill">✓</span>' : `<span class="pill gold">${k + 1}</span>`}</div><h3 style="margin-top:8px">${l.title}</h3></a>`).join("")}</div>
         <div class="sec"><h2>Besh vaqt namoz rakatlari</h2><a href="#/vaqtlar">🕰️ Bugungi vaqtlar →</a></div>
         <div class="card" style="overflow-x:auto"><table class="t"><tr><th>Namoz</th><th>Tarkibi</th><th>Jami</th><th>Izoh</th></tr>
           ${QN.rakaat.map((r) => `<tr><td><b>${r.n}</b> <span class="ar muted">${r.ar}</span></td><td>${r.parts.map(([t, c]) => `<span class="pill" style="margin:2px">${t}: ${c}</span>`).join(" ")}</td><td><b>${r.parts.reduce((a, p) => a + p[1], 0)}</b></td><td class="small muted">${r.note}</td></tr>`).join("")}</table></div>
@@ -594,7 +594,7 @@
       <div class="row" style="margin-top:12px"><a class="btn" href="#/tasbeh">📿 Tasbehni ochish</a><a class="btn ghost" href="#/quron/2/hifz/255/255">Oyatal Kursini yodlash</a></div>`;
     app.innerHTML = `<div class="view stack">
       <div class="row between">${back(id === "iymon" ? "#/" : "#/namoz", id === "iymon" ? "Bosh sahifa" : "Namoz")}<span class="pill">${k + 1}/${QN.ibodatLessons.length}</span></div>
-      <div class="card"><div class="row"><span style="font-size:2.2rem">${l.icon}</span><h1 style="margin:0">${l.title}</h1></div><div style="margin-top:14px">${body}</div></div>
+      <div class="card"><div class="row"><span class="mod-ic lg">${QN.ic(l.ic)}</span><h1 style="margin:0">${l.title}</h1></div><div style="margin-top:14px">${body}</div></div>
       <div class="card row between"><b>Mavzuni o'zlashtirdingizmi?</b><div class="row">${doneBtn(s.ibodat[id], 'id="idone"')}${nextL ? `<a class="btn ghost" href="#/namoz/${nextL.id}">Keyingi →</a>` : `<a class="btn ghost" href="#/duolar">Duolarga →</a>`}</div></div>
     </div>`;
     $$(".dua-ar", app).forEach((e) => { if (!e.closest(".card.flat") && !e.parentElement.classList.contains("card")) e.style.textAlign = "center"; });
@@ -619,7 +619,7 @@
     const set = S().settings;
     let loc = set.geo || { name: cities[set.city || 0][0], lat: cities[set.city || 0][1], lon: cities[set.city || 0][2] };
     app.innerHTML = `<div class="view stack">
-      <div><h1>🕰️ Namoz vaqtlari</h1><p>Shahringizni tanlang. Vaqtlar Hanafiy mazhabi bo'yicha (Asr — soya ikki barobar bo'lganda) hisoblanadi.</p></div>
+      <div><h1 class="ttl"><span class="ttl-ic">${QN.ic("clock")}</span>Namoz vaqtlari</h1><p>Shahringizni tanlang. Vaqtlar Hanafiy mazhabi bo'yicha (Asr — soya ikki barobar bo'lganda) hisoblanadi.</p></div>
       <div class="card row">
         <label class="small"><b>Shahar</b><br><select id="city">${cities.map((c, k) => `<option value="${k}" ${!set.geo && k === (set.city || 0) ? "selected" : ""}>${c[0]}</option>`).join("")}${set.geo ? `<option selected>📍 ${esc(set.geo.name)}</option>` : ""}</select></label>
         <label class="small"><b>Hisoblash usuli</b><br><select id="meth">${methods.map(([v, t]) => `<option value="${v}" ${v === set.method ? "selected" : ""}>${t}</option>`).join("")}</select></label>
@@ -627,9 +627,9 @@
       </div>
       <div id="tbox"><div class="spinner"></div></div>
       <div class="grid g2">
-        <div class="card center"><h3>🧭 Qibla yo'nalishi</h3><div class="qibla"><span class="n">Sh</span><div class="needle" id="needle"></div></div>
+        <div class="card center"><h3 class="h3i" style="justify-content:center">${QN.ic("kaaba")}Qibla yo'nalishi</h3><div class="qibla"><span class="n">Sh</span><div class="needle" id="needle"></div></div>
           <p style="margin-top:10px"><b id="qdeg"></b> — shimoldan soat mili bo'yicha</p><p class="small muted">Telefon kompasini shimolga to'g'rilab, shu burchak tomon buriling.</p></div>
-        <div class="card"><h3>📌 Eslatma</h3><p class="small">Vaqtlar astronomik hisob asosida (AlAdhan xizmati) olinadi va O'zbekiston musulmonlari idorasi taqvimidan bir necha daqiqa farq qilishi mumkin. Aniq vaqtni mahallangiz masjidi taqvimi bilan tekshiring.</p>
+        <div class="card"><h3 class="h3i">${QN.ic("bulb")}Eslatma</h3><p class="small">Vaqtlar astronomik hisob asosida (AlAdhan xizmati) olinadi va O'zbekiston musulmonlari idorasi taqvimidan bir necha daqiqa farq qilishi mumkin. Aniq vaqtni mahallangiz masjidi taqvimi bilan tekshiring.</p>
           <p class="small"><b>Makruh vaqtlar:</b> quyosh chiqayotganda, zavol paytida (tik turganda) va botayotganda namoz o'qilmaydi.</p>
           <a class="btn ghost sm" href="#/namoz">Rakatlar jadvali →</a></div>
       </div></div>`;
@@ -685,7 +685,7 @@
       $$("[data-dg]").forEach((b) => b.classList.toggle("on", b.dataset.dg === g));
     };
     app.innerHTML = `<div class="view stack">
-      <div class="row between"><div><h1>🤲 Duolar</h1><p>Kundalik hayot va namozdan keyingi duolar — sahih manbalar asosida. «📖 Qori» tugmasi Qur'oniy duolarni oyat tilovati bilan eshittiradi.</p></div>
+      <div class="row between"><div><h1 class="ttl"><span class="ttl-ic">${QN.ic("hands")}</span>Duolar</h1><p>Kundalik hayot va namozdan keyingi duolar — sahih manbalar asosida. «📖 Qori» tugmasi Qur'oniy duolarni oyat tilovati bilan eshittiradi.</p></div>
         <div class="card flat" style="padding:14px 18px"><b>${A.cnt(s.duo)}/${QN.duas.length}</b> duo yodlandi<div style="width:180px;margin-top:6px">${bar(A.modPct("duo"))}</div></div></div>
       <div class="row between"><div class="tabs"><button data-dg="">Barchasi</button>${groups.map((x) => `<button data-dg="${x}">${x}</button>`).join("")}</div><input type="search" id="dq" placeholder="🔎 Qidirish…" /></div>
       <div class="grid g2" id="dl"></div></div>`;
@@ -705,7 +705,7 @@
       $$("[data-hg]").forEach((b) => b.classList.toggle("on", b.dataset.hg === g));
     };
     app.innerHTML = `<div class="view stack">
-      <div class="row between"><div><h1>📜 Hadislar</h1><p>Payg'ambarimiz ﷺ ning ${QN.hadiths.length} ta tanlangan hadisi: niyat, ilm, Qur'on fazli, iymon, axloq va jamiyat haqida.</p></div>
+      <div class="row between"><div><h1 class="ttl"><span class="ttl-ic">${QN.ic("scroll")}</span>Hadislar</h1><p>Payg'ambarimiz ﷺ ning ${QN.hadiths.length} ta tanlangan hadisi: niyat, ilm, Qur'on fazli, iymon, axloq va jamiyat haqida.</p></div>
         <div class="card flat" style="padding:14px 18px"><b>${A.cnt(s.hadis)}/${QN.hadiths.length}</b> hadis o'qildi<div style="width:180px;margin-top:6px">${bar(A.modPct("hadis"))}</div></div></div>
       <div class="tabs"><button data-hg="">Barchasi</button>${groups.map((x) => `<button data-hg="${x}">${x}</button>`).join("")}</div>
       <div class="grid g2" id="hl"></div>
@@ -718,7 +718,7 @@
   const viewNames = () => {
     const s = S();
     app.innerHTML = `<div class="view stack">
-      <div class="row between"><div><h1>✨ Asmaul Husna</h1><p>«Allohning 99 ismi bor. Kim ularni yod olsa (ma'nosini anglab amal qilsa), jannatga kiradi» (Buxoriy, Muslim). Yodlaganingizni bosib belgilang.</p></div>
+      <div class="row between"><div><h1 class="ttl"><span class="ttl-ic">${QN.ic("sparkle")}</span>Asmaul Husna</h1><p>«Allohning 99 ismi bor. Kim ularni yod olsa (ma'nosini anglab amal qilsa), jannatga kiradi» (Buxoriy, Muslim). Yodlaganingizni bosib belgilang.</p></div>
         <div class="card flat" style="padding:14px 18px"><b id="nc">${A.cnt(s.names)}/99</b> ism<div style="width:180px;margin-top:6px" id="nb">${bar(A.modPct("asmo"))}</div></div></div>
       <div class="row"><a class="btn" href="#/sinov/asmo">🎯 Sinovdan o'tish</a></div>
       <div class="grid" style="grid-template-columns:repeat(auto-fill,minmax(190px,1fr))" id="nl">${QN.names.map((n, i) => `
@@ -733,7 +733,7 @@
   const viewSunnah = () => {
     const s = S();
     app.innerHTML = `<div class="view stack">
-      <div><h1>🌿 Kundalik sunnatlar</h1><p>Payg'ambarimiz ﷺ ning kundalik odatlari. Hayotingizga kiritgan har bir sunnatni belgilang — bu sizning «sunnat ro'yxatingiz».</p></div>
+      <div><h1 class="ttl"><span class="ttl-ic">${QN.ic("leaf")}</span>Kundalik sunnatlar</h1><p>Payg'ambarimiz ﷺ ning kundalik odatlari. Hayotingizga kiritgan har bir sunnatni belgilang — bu sizning «sunnat ro'yxatingiz».</p></div>
       <div class="card"><div class="row between"><b>Amalga kiritilgan sunnatlar</b><span class="pill">${Math.round(A.modPct("sunnat") * 100)}%</span></div><div style="margin-top:8px">${bar(A.modPct("sunnat"))}</div></div>
       ${QN.sunnats.map((g, gi) => `<div class="card"><h3>${g.g}</h3><div class="stack" style="gap:8px;margin-top:10px">${g.items.map(([t, src], ii) => { const k = `${gi}-${ii}`; return `
         <label class="row between" style="padding:10px 12px;border-radius:12px;border:1px solid var(--line);cursor:pointer;background:var(--card-solid)">
@@ -749,7 +749,7 @@
     const zikr = [["سُبْحَانَ اللّٰهِ", "Subhanalloh"], ["الْحَمْدُ لِلّٰهِ", "Alhamdulillah"], ["اللّٰهُ أَكْبَرُ", "Allohu akbar"], ["لَا إِلٰهَ إِلَّا اللّٰهُ", "La ilaha illalloh"], ["أَسْتَغْفِرُ اللّٰهَ", "Astag'firulloh"], ["اللّٰهُمَّ صَلِّ عَلَىٰ مُحَمَّدٍ", "Salavot"], ["سُبْحَانَ اللّٰهِ وَبِحَمْدِهِ", "Subhanallohi va bihamdihi"]];
     let zi = 0, n = 0, target = 33;
     app.innerHTML = `<div class="view stack" style="max-width:640px;margin:auto">
-      <div class="center"><h1>📿 Tasbeh</h1><p>Zikrni tanlang va katta tugmani bosing. Maqsadga yetganda telefon titraydi.</p></div>
+      <div class="center"><h1 class="ttl"><span class="ttl-ic">${QN.ic("beads")}</span>Tasbeh</h1><p>Zikrni tanlang va katta tugmani bosing. Maqsadga yetganda telefon titraydi.</p></div>
       <div class="tabs" style="margin:auto">${zikr.map((z, i) => `<button data-z="${i}">${z[1]}</button>`).join("")}</div>
       <div class="card center"><div class="dua-ar" style="text-align:center" id="zar"></div>
         <button class="tasbeh-btn" id="tb">0</button>
@@ -773,18 +773,18 @@
   const viewSettings = () => {
     const s = S(), set = s.settings;
     app.innerHTML = `<div class="view stack" style="max-width:820px">
-      <h1>⚙️ Sozlamalar</h1>
+      <h1 class="ttl"><span class="ttl-ic">${QN.ic("gear")}</span>Sozlamalar</h1>
       <div class="card stack">
         <label class="row between"><b>🌙 Tungi rejim</b><input type="checkbox" id="dk" ${set.dark ? "checked" : ""} style="width:22px;height:22px;accent-color:var(--g-600)"/></label>
         <label class="stack" style="gap:6px"><b>🔠 Arabcha matn o'lchami: <span id="asv">${Math.round(set.arScale * 100)}%</span></b><input type="range" id="as" min="0.8" max="1.6" step="0.05" value="${set.arScale}"/>
           <div class="dua-ar" style="text-align:center">بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِيمِ</div></label>
         <label class="row between"><b>🎙 Qori</b><select id="rc">${QN.reciters.map((r) => `<option value="${r.id}" ${r.id === set.reciter ? "selected" : ""}>${r.n}</option>`).join("")}</select></label>
         <label class="row between"><b>🗣 Arabcha ovoz manbai</b><select id="vm"><option value="auto">Avtomatik (tavsiya)</option><option value="cloud">Onlayn ovoz (Google)</option><option value="device">Qurilma ovozi</option></select></label>
-        <div class="row between"><b>🔊 Arabcha ovozni sinash</b>${say("بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِيمِ", "btn ghost sm", "▶ Sinash")}</div>
+        <div class="row between"><b>🔊 Arabcha ovozni sinash</b>${say("بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِيمِ", "btn ghost sm", QN.ic("play") + " Sinash")}</div>
       </div>
-      <div class="card stack"><h3>💾 Progressni saqlash</h3><p class="small">Barcha yutuqlaringiz shu brauzerda saqlanadi. Boshqa qurilmaga o'tkazish uchun faylga eksport qiling.</p>
+      <div class="card stack"><h3 class="h3i">${QN.ic("check")}Progressni saqlash</h3><p class="small">Barcha yutuqlaringiz shu brauzerda saqlanadi. Boshqa qurilmaga o'tkazish uchun faylga eksport qiling.</p>
         <div class="row"><button class="btn" id="ex">⬇ Eksport</button><label class="btn ghost">⬆ Import<input type="file" id="im" accept="application/json" hidden/></label><button class="btn ghost" id="rs" style="color:#b03a2e">🗑 Hammasini o'chirish</button></div></div>
-      <div class="card"><h3>📚 Manbalar</h3><ul class="list small">
+      <div class="card"><h3 class="h3i">${QN.ic("book")}Manbalar</h3><ul class="list small">
         <li>Qur'on matni (Usmoniy rasm) va transkripsiya — AlQuran.cloud (Islamic Network)</li>
         <li>Ma'nolar tarjimasi — Shayx Muhammad Sodiq Muhammad Yusuf</li>
         <li>Tilovat audiolari — cdn.islamic.network (Husariy, Afasiy, Minshoviy, Abdulbosit)</li>
@@ -835,7 +835,7 @@
     const cloud = Au().mode === "cloud";
     app.innerHTML = `<div class="auth-wrap view">
       <div class="auth-art">
-        <a class="brand" href="#/kirish" style="color:#fff !important"><img src="assets/img/icon.svg" alt="" class="brand-logo"/><div><div class="brand-name">Qalb Nuri</div><div class="brand-ar" style="color:var(--gold-soft)">نُورُ الْقَلْب</div></div></a>
+        <a class="auth-logo" href="#/kirish"><img src="assets/img/logo.svg" alt="Qalb Nuri"/></a>
         <div style="position:relative;z-index:1;margin:26px 0">
           <h1>Arab alifbosidan<br/>Qur'on hifzigacha</h1>
           <p class="hide-m">Alifbo, talaffuz, tajvid, Qur'on o'qish va yodlash, namoz, duolar, hadislar — barchasi bitta joyda. Progressingiz akkauntingizda saqlanadi.</p>
@@ -883,7 +883,7 @@
     document.body.classList.add("auth");
     const hr = new Date().getHours();
     app.innerHTML = `<div class="welcome"><div class="welcome-in stack">
-      <div class="center"><img src="assets/img/icon.svg" alt="" style="width:64px;height:64px;border-radius:18px;box-shadow:var(--shadow)"/>
+      <div class="center"><img src="assets/img/logo.svg" alt="Qalb Nuri" class="welcome-logo"/>
         <h2 style="margin-top:14px">Assalomu alaykum, ${esc(nameInfo(u.name).first)}!</h2>
         <p>${hr < 11 ? "Xayrli tong" : hr < 17 ? "Xayrli kun" : "Xayrli kech"}. Qalb Nuri oilasiga xush kelibsiz.</p></div>
       ${nameHero(u.name)}
@@ -897,7 +897,7 @@
     const u = Au().user, s = S();
     const cloud = Au().mode === "cloud";
     app.innerHTML = `<div class="view stack" style="max-width:820px">
-      <h1>👤 Profilim</h1>
+      <h1 class="ttl"><span class="ttl-ic">${QN.ic("user")}</span>Profilim</h1>
       ${nameHero(u.name, false)}
       <div class="grid g3">
         <div class="card center"><div style="font-size:1.8rem;font-weight:800;color:var(--g-700)">${Math.floor(A.totalPct())}%</div><div class="small muted">umumiy yo'l</div></div>
@@ -910,7 +910,7 @@
         <div class="field"><label>Email</label><input type="email" value="${esc(u.email)}" disabled/></div>
         <div class="err" id="perr"></div>
         <button class="btn" id="pSave">Saqlash</button></div>
-      <div class="card"><h3>☁️ Progress saqlanishi</h3><p class="small" style="margin:0">${cloud ? "Progressingiz har bir harakatdan so'ng avtomatik ravishda bulutga saqlanadi. Boshqa telefon yoki kompyuterdan kirsangiz — hammasi joyida bo'ladi." : "Progressingiz har bir harakatdan so'ng avtomatik ravishda shu qurilmada, akkauntingizga bog'lab saqlanadi. Boshqa qurilmaga o'tkazish uchun Sozlamalar → Eksport."}</p></div>
+      <div class="card"><h3 class="h3i">${QN.ic("check")}Progress saqlanishi</h3><p class="small" style="margin:0">${cloud ? "Progressingiz har bir harakatdan so'ng avtomatik ravishda bulutga saqlanadi. Boshqa telefon yoki kompyuterdan kirsangiz — hammasi joyida bo'ladi." : "Progressingiz har bir harakatdan so'ng avtomatik ravishda shu qurilmada, akkauntingizga bog'lab saqlanadi. Boshqa qurilmaga o'tkazish uchun Sozlamalar → Eksport."}</p></div>
       <button class="btn ghost" id="logout" style="color:#b03a2e">⎋ Akkauntdan chiqish</button>
     </div>`;
     phoneMask($("#pPhone"));
@@ -961,6 +961,7 @@
         document.body.classList.remove("menu");
         window.scrollTo({ top: 0 });
         fn(...m.slice(1));
+        QN.fillIcons(document);
         app.focus({ preventScroll: true });
         return;
       }
@@ -969,6 +970,7 @@
   };
 
   /* ---------------- Ishga tushirish ---------------- */
+  QN.fillIcons(document);
   A.applySettings(); A.refreshShell();
   window.addEventListener("hashchange", route);
   $("#menuBtn").onclick = () => document.body.classList.toggle("menu");

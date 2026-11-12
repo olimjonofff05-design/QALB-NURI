@@ -224,18 +224,18 @@ QN.pairs = [["ح", "ه"], ["ع", "ء"], ["ص", "س"], ["ط", "ت"], ["ق", "ك"]
 
 /* O'quv modullari va ularning umumiy progressdagi og'irligi (jami 100) */
 QN.modules = [
-  { id: "alifbo", title: "Arab alifbosi", icon: "ا", w: 12, desc: "28 harf: ko'rinishi, talaffuzi, yozilishi", route: "#/alifbo" },
-  { id: "harf", title: "Harf shakllari va belgilar", icon: "🔤", w: 4, desc: "So'zdagi 4 shakl, hamza, tā marbūṭa", route: "#/darslar" },
-  { id: "harakat", title: "Harakatlar", icon: "◌َ", w: 10, desc: "Fatha, kasra, zamma, sukun, shadda, tanvin, madd", route: "#/darslar" },
-  { id: "oqish", title: "O'qishni boshlash", icon: "📝", w: 6, desc: "Alloh lafzi, so'zlar, Fotiha", route: "#/darslar" },
-  { id: "tajvid", title: "Tajvid asoslari", icon: "🎼", w: 10, desc: "Maxraj, nūn, g'unna, qalqala, madd, vaqf", route: "#/darslar" },
-  { id: "quron", title: "Qur'on o'qish (30-pora)", icon: "📗", w: 14, desc: "Fotiha va 78–114 suralarni o'qib chiqish", route: "#/quron" },
-  { id: "hifz", title: "Hifz — yodlash", icon: "💚", w: 16, desc: "Namoz uchun kerakli 15 sura + Oyatal Kursi", route: "#/hifz" },
-  { id: "ibodat", title: "Iymon, tahorat va namoz", icon: "🕌", w: 12, desc: "Iymon asoslari, tahorat, namoz tartibi", route: "#/namoz" },
-  { id: "duo", title: "Duolar", icon: "🤲", w: 7, desc: "Kundalik va Qur'oniy duolar", route: "#/duolar" },
-  { id: "hadis", title: "Hadislar", icon: "📜", w: 5, desc: "40 ta tanlangan hadis", route: "#/hadislar" },
-  { id: "asmo", title: "Asmaul Husna", icon: "✨", w: 2, desc: "Allohning 99 go'zal ismi", route: "#/asmaul-husna" },
-  { id: "sunnat", title: "Sunnatlar", icon: "🌿", w: 2, desc: "Kundalik sunnat amallar", route: "#/sunnatlar" },
+  { id: "alifbo", ic: "letters", title: "Arab alifbosi", icon: "ا", w: 12, desc: "28 harf: ko'rinishi, talaffuzi, yozilishi", route: "#/alifbo" },
+  { id: "harf", ic: "layers", title: "Harf shakllari va belgilar", icon: "🔤", w: 4, desc: "So'zdagi 4 shakl, hamza, tā marbūṭa", route: "#/darslar" },
+  { id: "harakat", ic: "pen", title: "Harakatlar", icon: "◌َ", w: 10, desc: "Fatha, kasra, zamma, sukun, shadda, tanvin, madd", route: "#/darslar" },
+  { id: "oqish", ic: "book", title: "O'qishni boshlash", icon: "📝", w: 6, desc: "Alloh lafzi, so'zlar, Fotiha", route: "#/darslar" },
+  { id: "tajvid", ic: "music", title: "Tajvid asoslari", icon: "🎼", w: 10, desc: "Maxraj, nūn, g'unna, qalqala, madd, vaqf", route: "#/darslar" },
+  { id: "quron", ic: "quran", title: "Qur'on o'qish (30-pora)", icon: "📗", w: 14, desc: "Fotiha va 78–114 suralarni o'qib chiqish", route: "#/quron" },
+  { id: "hifz", ic: "heart", title: "Hifz — yodlash", icon: "💚", w: 16, desc: "Namoz uchun kerakli 15 sura + Oyatal Kursi", route: "#/hifz" },
+  { id: "ibodat", ic: "mosque", title: "Iymon, tahorat va namoz", icon: "🕌", w: 12, desc: "Iymon asoslari, tahorat, namoz tartibi", route: "#/namoz" },
+  { id: "duo", ic: "hands", title: "Duolar", icon: "🤲", w: 7, desc: "Kundalik va Qur'oniy duolar", route: "#/duolar" },
+  { id: "hadis", ic: "scroll", title: "Hadislar", icon: "📜", w: 5, desc: "40 ta tanlangan hadis", route: "#/hadislar" },
+  { id: "asmo", ic: "sparkle", title: "Asmaul Husna", icon: "✨", w: 2, desc: "Allohning 99 go'zal ismi", route: "#/asmaul-husna" },
+  { id: "sunnat", ic: "leaf", title: "Sunnatlar", icon: "🌿", w: 2, desc: "Kundalik sunnat amallar", route: "#/sunnatlar" },
 ];
 
 /* O'qish rejasi: Fotiha + 30-pora (78–114) */

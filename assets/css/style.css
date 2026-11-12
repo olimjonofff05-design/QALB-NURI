@@ -461,3 +461,111 @@ body.auth .main { margin: 0; max-width: none; padding: 0; }
   .auth-art { padding: 28px 22px 34px; border-radius: 0 0 28px 28px; }
   .auth-art .hide-m { display: none; }
 }
+
+/* =========================================================
+   YAKUNIY VIZUAL SAYQAL (v9)
+   ========================================================= */
+body { background-image:
+  radial-gradient(900px 500px at 100% -10%, rgba(127,220,184,.25), transparent 60%),
+  radial-gradient(700px 400px at -10% 20%, rgba(246,231,176,.25), transparent 60%),
+  linear-gradient(180deg, #ffffff 0%, #f4fbf7 45%, #e9f7f0 100%); background-attachment: fixed; }
+body.dark { background-image: radial-gradient(900px 500px at 100% -10%, rgba(25,169,123,.15), transparent 60%), linear-gradient(180deg, #05231a 0%, #061f18 100%); }
+.ic { width: 1.25em; height: 1.25em; flex: none; vertical-align: -0.22em; }
+.btn .ic, .play .ic { width: 1.1em; height: 1.1em; }
+.play .ic { width: 1.05rem; height: 1.05rem; }
+
+/* Logo */
+.brand-logo { width: 50px; height: 50px; border-radius: 14px; background: #fff; box-shadow: 0 6px 18px -6px rgba(6,61,46,.35), 0 0 0 1px rgba(11,107,80,.08); }
+.topbar .brand.mini .brand-logo { width: 38px; height: 38px; border-radius: 11px; }
+.brand-name { background: linear-gradient(90deg, var(--g-800), var(--g-500)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+body.dark .brand-name { background: linear-gradient(90deg, #e6f5ee, var(--g-300)); -webkit-background-clip: text; background-clip: text; }
+.brand-ar { color: #c9971f; }
+.auth-logo { position: relative; z-index: 1; display: inline-block; }
+.auth-logo img { width: 104px; height: 104px; border-radius: 28px; box-shadow: 0 20px 40px -16px rgba(0,0,0,.45), 0 0 0 4px rgba(255,255,255,.18); }
+.welcome-logo { width: 132px; height: 132px; border-radius: 34px; box-shadow: var(--shadow-lg), 0 0 0 1px var(--line); }
+
+/* Menyu */
+.nav a { padding: 7px 10px; gap: 12px; }
+.ni { width: 34px; height: 34px; border-radius: 11px; display: grid; place-items: center; background: var(--g-50); color: var(--g-700); border: 1px solid var(--line); transition: .2s; }
+body.dark .ni { background: rgba(127,220,184,.06); color: var(--g-300); }
+.ni .ic { width: 18px; height: 18px; }
+.nav a:hover .ni { background: #fff; color: var(--g-600); transform: scale(1.05); }
+.nav a.active { position: relative; background: linear-gradient(135deg, #0b6b50, #15a074); box-shadow: 0 10px 22px -10px rgba(11,107,80,.75); }
+.nav a.active::before { content: ""; position: absolute; left: -14px; top: 10px; bottom: 10px; width: 4px; border-radius: 0 4px 4px 0; background: linear-gradient(#f7dc7a, #c9971f); }
+.nav a.active .ni { background: rgba(255,255,255,.16); border-color: rgba(255,255,255,.22); color: #fff; }
+.nav-group { display: flex; align-items: center; gap: 8px; }
+.nav-group::after { content: ""; flex: 1; height: 1px; background: linear-gradient(90deg, var(--line), transparent); }
+.share-btn { background: linear-gradient(135deg, #b8901c, #e9c95a); color: #3a2c00; box-shadow: 0 10px 22px -12px rgba(184,144,28,.8); }
+.side-progress { background: linear-gradient(135deg, #ffffff, #e9f8f0); }
+body.dark .side-progress { background: rgba(127,220,184,.05); }
+.ring-sm { background: conic-gradient(#c9971f 0, #f2c94c calc(var(--p) * 1%), var(--g-100) 0); }
+
+/* Yuqori panel chiplari */
+.chip { font-weight: 700; }
+.chip-ic { display: inline-grid; }
+.chip-ic.flame { color: #e8772e; }
+.chip-ic.starc { color: #d9a92c; }
+.chip-ic .ic { width: 16px; height: 16px; }
+.chip.strong { background: linear-gradient(135deg, #0b6b50, #19a97b); box-shadow: 0 6px 14px -6px rgba(11,107,80,.6); }
+.avatar { box-shadow: 0 0 0 2px #fff, 0 0 0 4px rgba(201,151,31,.55); }
+
+/* Sarlavhalar */
+.ttl { display: flex; align-items: center; gap: 14px; }
+.ttl-ic { width: 54px; height: 54px; flex: none; border-radius: 17px; display: grid; place-items: center; color: #fff;
+  background: linear-gradient(135deg, #0b6b50, #19a97b); box-shadow: 0 12px 24px -12px rgba(11,107,80,.8), inset 0 0 0 1px rgba(255,255,255,.18); position: relative; }
+.ttl-ic::after { content: ""; position: absolute; inset: -4px; border-radius: 20px; border: 1.5px solid rgba(201,151,31,.45); }
+.ttl-ic .ic { width: 27px; height: 27px; }
+.mod-ic { width: 48px; height: 48px; border-radius: 15px; display: grid; place-items: center; color: #fff; flex: none;
+  background: linear-gradient(135deg, #0b6b50, #19a97b); box-shadow: 0 10px 20px -10px rgba(11,107,80,.8); }
+.mod-ic .ic { width: 24px; height: 24px; }
+.mod-ic.lg { width: 60px; height: 60px; border-radius: 18px; }
+.mod-ic.lg .ic { width: 30px; height: 30px; }
+.card.hover:hover .mod-ic { background: linear-gradient(135deg, #b8901c, #e9c95a); color: #3a2c00; }
+.step-badge .ic { width: 28px; height: 28px; color: var(--g-700); }
+.step.done .step-badge .ic { color: #fff; }
+.sec h2 { display: flex; align-items: center; gap: 10px; }
+.sec h2::before { content: ""; width: 12px; height: 12px; transform: rotate(45deg); border-radius: 3px; background: linear-gradient(135deg, #f7dc7a, #c9971f); box-shadow: 0 0 0 4px rgba(201,151,31,.15); }
+
+/* Kartalar */
+.card { border: 1px solid rgba(11,107,80,.10); box-shadow: 0 1px 2px rgba(6,61,46,.04), 0 12px 32px -18px rgba(6,61,46,.28); }
+.card.hover { position: relative; }
+.card.hover::after { content: ""; position: absolute; left: 20px; right: 20px; top: -1px; height: 3px; border-radius: 0 0 3px 3px; background: linear-gradient(90deg, transparent, #e9c95a, transparent); opacity: 0; transition: .25s; }
+.card.hover:hover::after { opacity: 1; }
+.card.hover:hover { border-color: rgba(201,151,31,.35); }
+.pill { font-weight: 800; }
+.bar { height: 9px; }
+.bar > i { background: linear-gradient(90deg, #0b6b50, #19a97b 70%, #7fdcb8); }
+
+/* Hero: masjid silueti va oltin halqa */
+.hero::before { content: ""; position: absolute; left: 0; right: 0; bottom: -2px; height: 110px; opacity: .13; pointer-events: none;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 140' preserveAspectRatio='none'%3E%3Cpath fill='white' d='M0 140V110H60V70L66 50L72 70V110H120C120 80 150 62 175 58C200 62 230 80 230 110H300V60L306 36L312 60V110H360C360 60 410 30 460 24C510 30 560 60 560 110H620V80C620 66 640 56 655 52C670 56 690 66 690 80V110H760V50L766 24L772 50V110H820C820 76 852 56 880 52C908 56 940 76 940 110H1010V64L1016 40L1022 64V110H1080C1080 88 1100 76 1120 72C1140 76 1160 88 1160 110H1200V140Z'/%3E%3C/svg%3E") bottom/100% 100% no-repeat; }
+.hero { box-shadow: 0 30px 60px -28px rgba(6,61,46,.6), inset 0 0 0 1px rgba(255,255,255,.08); }
+.ring { background: conic-gradient(#f7dc7a 0, #e9c95a calc(var(--p) * 1%), rgba(255,255,255,.16) 0); box-shadow: 0 0 40px rgba(246,231,176,.25); }
+.ring::before { background: radial-gradient(circle at 50% 30%, rgba(25,169,123,.6), rgba(4,41,31,.75)); }
+
+/* Harflar */
+.letter-card { background: linear-gradient(180deg, #ffffff, #f7fcf9); }
+.letter-card .L { text-shadow: 0 6px 14px rgba(11,107,80,.12); }
+.letter-card.learned { border-color: rgba(201,151,31,.55); }
+.letter-card.learned .tick { color: #c9971f; }
+.syl { background: linear-gradient(180deg, #ffffff, #f6fbf8); }
+body.dark .letter-card, body.dark .syl { background: var(--card-solid); }
+
+/* Pastki panel — suzib turuvchi */
+@media (max-width: 900px) {
+  .bottom-nav { left: 10px; right: 10px; bottom: calc(8px + env(safe-area-inset-bottom)); padding: 6px; border-radius: 22px; border: 1px solid var(--line);
+    box-shadow: 0 16px 36px -14px rgba(6,61,46,.4); background: rgba(255,255,255,.92); }
+  .bottom-nav a { flex: 1; padding: 6px 2px; border-radius: 16px; }
+  .bottom-nav a span { display: grid; place-items: center; width: 34px; height: 30px; border-radius: 11px; }
+  .bottom-nav a span .ic { width: 21px; height: 21px; }
+  .bottom-nav a.active { background: transparent; }
+  .bottom-nav a.active span { background: linear-gradient(135deg, #0b6b50, #19a97b); color: #fff; box-shadow: 0 6px 14px -6px rgba(11,107,80,.8); }
+  .main { padding-bottom: calc(120px + env(safe-area-inset-bottom)); }
+  .player { bottom: calc(86px + env(safe-area-inset-bottom)); }
+  .ttl-ic { width: 46px; height: 46px; border-radius: 15px; }
+  .ttl-ic .ic { width: 23px; height: 23px; }
+}
+.h3i { display: flex; align-items: center; gap: 9px; }
+.h3i .ic { width: 22px; height: 22px; color: #c9971f; }
+.topbar .brand.mini .brand-name { font-size: 1.05rem; white-space: nowrap; }
+@media (max-width: 430px) { .topbar .brand.mini .brand-name { display: none; } .topbar { gap: 8px; } }

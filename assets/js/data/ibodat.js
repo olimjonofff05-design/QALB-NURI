@@ -70,7 +70,7 @@ QN.azanDua = { ar: "اللّٰهُمَّ رَبَّ هٰذِهِ الدَّعْ�
 /* Ibodat darslari — har biri progressga kiradi */
 QN.ibodatLessons = [
   {
-    id: "iymon", icon: "🌙", title: "Iymon va Islom arkonlari",
+    id: "iymon", ic: "moon", icon: "🌙", title: "Iymon va Islom arkonlari",
     html: `<h3>Kalimai tayyiba</h3>
     <p class="dua-ar">لَا إِلٰهَ إِلَّا اللّٰهُ مُحَمَّدٌ رَسُولُ اللّٰهِ</p>
     <p class="translit">La ilaha illallohu Muhammadur rosululloh</p><p>Allohdan o'zga iloh yo'q, Muhammad Allohning elchisidir.</p>
@@ -85,7 +85,7 @@ QN.ibodatLessons = [
     <div class="info">Jabroil alayhissalom hadisida Payg'ambarimiz ﷺ <b>Ihson</b>ni shunday ta'riflaganlar: «Allohga xuddi Uni ko'rib turgandek ibodat qilishing. Sen Uni ko'rmasang ham, U seni ko'rib turadi.» (Muslim)</div>`,
   },
   {
-    id: "tahorat", icon: "💧", title: "Tahorat (vuzu') olish",
+    id: "tahorat", ic: "drop", icon: "💧", title: "Tahorat (vuzu') olish",
     html: `<div class="info">Tahorat — namozning kaliti. Hanafiy mazhabida tahoratning <b>4 farzi</b> bor: 1) yuzni yuvish, 2) ikki qo'lni tirsaklar bilan yuvish, 3) boshning to'rtdan biriga mas'h tortish, 4) ikki oyoqni to'piqlar bilan yuvish. (Moida, 6)</div>
     <h3 style="margin-top:18px">Tahorat olish tartibi</h3>
     <ol class="steps-list">
@@ -106,7 +106,7 @@ QN.ibodatLessons = [
     <ul class="list"><li>Bismillah bilan boshlash, niyat qilish</li><li>Misvok ishlatish</li><li>Har bir a'zoni 3 marta yuvish</li><li>O'ng tomondan boshlash</li><li>Tartib va ketma-ketlikka rioya qilish, a'zolar qurimay turib keyingisini yuvish</li><li>Suvni isrof qilmaslik</li></ul>`,
   },
   {
-    id: "gusl", icon: "🚿", title: "G'usl va tayammum",
+    id: "gusl", ic: "shower", icon: "🚿", title: "G'usl va tayammum",
     html: `<h3>G'usl (to'liq yuvinish)</h3>
     <p>Junublik, hayz va nifosdan keyin g'usl farz bo'ladi. Juma, ikki hayit va ehrom uchun g'usl sunnat.</p>
     <div class="info">Hanafiy mazhabida g'uslning <b>3 farzi</b>: 1) og'izni chayish, 2) burunga suv tortish, 3) butun badanni (bir tuk o'rnicha ham quruq qoldirmay) yuvish.</div>
@@ -117,7 +117,7 @@ QN.ibodatLessons = [
     <p class="muted small">Tahoratni buzadigan narsa tayammumni ham buzadi. Suv topilganda tayammum bekor bo'ladi.</p>`,
   },
   {
-    id: "namoz-shartlari", icon: "📋", title: "Namozning farzlari, vojiblari va buzuvchilari",
+    id: "namoz-shartlari", ic: "clipboard", icon: "📋", title: "Namozning farzlari, vojiblari va buzuvchilari",
     html: `<div class="grid g2">
     <div><h3>Namozdan tashqari farzlar (shartlar)</h3><ol class="list"><li>Hadasdan poklanish (tahorat/g'usl)</li><li>Badan, kiyim va joyning najosatdan pokligi</li><li>Avratni yopish (erkak: kindikdan tizza ostigacha; ayol: yuz, kaft va oyoq panjasidan boshqa butun badan)</li><li>Qiblaga yuzlanish</li><li>Vaqt kirgan bo'lishi</li><li>Niyat</li></ol></div>
     <div><h3>Namoz ichidagi farzlar (rukunlar)</h3><ol class="list"><li>Iftitoh takbiri</li><li>Qiyom — tik turish</li><li>Qiroat — Qur'on o'qish</li><li>Ruku'</li><li>Ikki sajda</li><li>Qa'dai oxir — oxirgi o'tirish (Attahiyyot miqdori)</li></ol></div></div>
@@ -128,28 +128,28 @@ QN.ibodatLessons = [
     <ul class="list"><li>Gapirish, salom berish yoki alik olish</li><li>Yeyish yoki ichish</li><li>Ko'krakni qibladan burish</li><li>Ko'p harakat qilish (ko'rgan odam namozda emas deb o'ylaydigan darajada)</li><li>Ovoz chiqarib kulish</li><li>Tahoratning buzilishi</li><li>Qur'onni ma'no buziladigan darajada xato o'qish</li></ul>`,
   },
   {
-    id: "namoz-tartibi", icon: "🕌", title: "Namoz o'qish tartibi (qadam-baqadam)", special: "steps",
+    id: "namoz-tartibi", ic: "mosque", icon: "🕌", title: "Namoz o'qish tartibi (qadam-baqadam)", special: "steps",
   },
   {
-    id: "namoz-duolari", icon: "📿", title: "Namozda o'qiladigan duolarni yodlash", special: "texts",
+    id: "namoz-duolari", ic: "beads", icon: "📿", title: "Namozda o'qiladigan duolarni yodlash", special: "texts",
   },
   {
-    id: "vitr", icon: "🌌", title: "Vitr namozi va qunut", special: "vitr",
+    id: "vitr", ic: "stars", icon: "🌌", title: "Vitr namozi va qunut", special: "vitr",
     html: `<p>Vitr — Hanafiy mazhabida <b>vojib</b> namoz, xufton farzidan keyin tong otguncha o'qiladi. <b>3 rakat</b>, bir salom bilan.</p>
     <ol class="steps-list"><li>Birinchi 2 rakat oddiy namoz kabi o'qiladi, 2-rakatda o'tirib faqat Attahiyyot o'qiladi.</li><li>3-rakatga turib Fotiha va zam sura o'qiladi.</li><li>So'ng «Allohu akbar» deb qo'llar quloqqa ko'tariladi va yana bog'lanadi.</li><li><b>Qunut duosi</b> o'qiladi.</li><li>Ruku', sajdalar va oxirgi qa'da bilan namoz yakunlanadi.</li></ol>
     <div class="info">Qunutni hali yodlamagan kishi uning o'rniga «Robbana atina...» yoki 3 marta «Allohummag'fir liy» deb tursa bo'ladi, ammo tezroq yodlashga harakat qilsin.</div>`,
   },
   {
-    id: "azon", icon: "📢", title: "Azon va iqomat", special: "azon",
+    id: "azon", ic: "megaphone", icon: "📢", title: "Azon va iqomat", special: "azon",
   },
   {
-    id: "juma", icon: "🕋", title: "Juma namozi va uning odoblari",
+    id: "juma", ic: "kaaba", icon: "🕋", title: "Juma namozi va uning odoblari",
     html: `<p>Juma — haftaning eng afzal kuni. Juma namozi balog'atga yetgan, sog'lom, muqim erkaklarga farz. (Juma surasi, 9)</p>
     <ul class="list"><li>G'usl qilish, toza kiyim kiyish va xushbo'ylanish</li><li>Masjidga erta borish</li><li>Xutbani jim tinglash — xutba vaqtida gapirish mumkin emas</li><li>Kahf surasini o'qish</li><li>Payg'ambarimiz ﷺ ga ko'p salavot aytish</li><li>Asr va shom orasida duo qilish — ijobat soati umid qilinadi</li></ul>
     <p><b>Tartib:</b> 4 rakat sunnat → xutba → 2 rakat farz (imom bilan) → 4 rakat sunnat.</p>`,
   },
   {
-    id: "zikrlar", icon: "🤍", title: "Namozdan keyingi zikrlar", special: "after",
+    id: "zikrlar", ic: "heart", icon: "🤍", title: "Namozdan keyingi zikrlar", special: "after",
   },
 ];
 
