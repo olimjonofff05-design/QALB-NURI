@@ -8,6 +8,7 @@
   const digits = (p) => String(p || "").replace(/\D/g, "");
   const isEmail = (s) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(s).trim());
   const err = (m) => { const e = new Error(m); e.uz = m; return e; };
+  const T = (p, ms = 9000) => Promise.race([p, new Promise((_, j) => setTimeout(() => j(new Error("timeout")), ms))]);
 
   const Auth = { mode: cfg ? "cloud" : "local", user: null };
 
@@ -44,8 +45,8 @@
   };
   const profileOf = async (u) => {
     const { fs, db } = fb;
-    const snap = await fs.getDoc(fs.doc(db, "users", u.uid));
-    const d = snap.exists() ? snap.data() : {};
+    let d = {};
+    try { const snap = await T(fs.getDoc(fs.doc(db, "users", u.uid))); d = snap.exists() ? snap.data() : {}; } catch {}
     return { uid: u.uid, name: d.name || u.displayName || "", phone: d.phone || "", email: u.email, created: d.created || "" };
   };
 
@@ -58,7 +59,7 @@
     }
     try {
       await loadFB();
-      const u = await new Promise((res) => { const off = fb.auth.onAuthStateChanged(fb.au, (x) => { off(); res(x); }); });
+      const u = await T(new Promise((res) => { const off = fb.auth.onAuthStateChanged(fb.au, (x) => { off(); res(x); }); }), 12000);
       Auth.user = u ? await profileOf(u) : null;
     } catch (e) { console.warn("Firebase:", e); Auth.user = null; }
     return Auth.user;
@@ -83,13 +84,13 @@
     }
     await loadFB();
     const { auth, fs, au, db } = fb;
-    const ph = await fs.getDoc(fs.doc(db, "phones", phone)).catch(() => null);
+    const ph = await T(fs.getDoc(fs.doc(db, "phones", phone)), 6000).catch(() => null);
     if (ph && ph.exists()) throw err("Bu telefon raqam bilan akkaunt allaqachon mavjud.");
     let cred;
     try { cred = await auth.createUserWithEmailAndPassword(au, email, password); } catch (e) { throw fbErr(e); }
     await auth.updateProfile(cred.user, { displayName: name }).catch(() => {});
-    await fs.setDoc(fs.doc(db, "users", cred.user.uid), { name, phone, email, created });
-    await fs.setDoc(fs.doc(db, "phones", phone), { uid: cred.user.uid, email }).catch(() => {});
+    await T(fs.setDoc(fs.doc(db, "users", cred.user.uid), { name, phone, email, created })).catch((e) => console.warn("Profil saqlanmadi", e));
+    await T(fs.setDoc(fs.doc(db, "phones", phone), { uid: cred.user.uid, email })).catch(() => {});
     return (Auth.user = { uid: cred.user.uid, name, phone, email, created });
   };
 
@@ -108,7 +109,7 @@
     let email = id.toLowerCase();
     if (!isEmail(id)) {
       let p = digits(id); if (p.length === 9) p = "998" + p;
-      const snap = await fs.getDoc(fs.doc(db, "phones", p)).catch(() => null);
+      const snap = await T(fs.getDoc(fs.doc(db, "phones", p))).catch(() => null);
       if (!snap || !snap.exists()) throw err("Bu telefon raqam bilan akkaunt topilmadi.");
       email = snap.data().email;
     }
@@ -137,7 +138,7 @@
     name = String(name || "").trim(); phone = digits(phone);
     if (name.length < 2) throw err("Ismingizni kiriting.");
     if (Auth.mode === "local") { const a = accounts(); Object.assign(a[u.uid], { name, phone }); saveAccounts(a); }
-    else { await loadFB(); await fb.fs.setDoc(fb.fs.doc(fb.db, "users", u.uid), { name, phone }, { merge: true }); }
+    else { await loadFB(); await T(fb.fs.setDoc(fb.fs.doc(fb.db, "users", u.uid), { name, phone }, { merge: true })).catch(() => { throw err("Saqlab bo'lmadi. Internetni tekshiring."); }); }
     Object.assign(u, { name, phone });
   };
 
@@ -151,12 +152,12 @@
     clearTimeout(timer);
     if (Auth.mode !== "cloud" || !Auth.user || !pending || !fb) return;
     const st = JSON.parse(JSON.stringify(pending)); pending = null;
-    try { await fb.fs.setDoc(fb.fs.doc(fb.db, "users", Auth.user.uid), { state: st, updatedAt: new Date().toISOString() }, { merge: true }); Auth.lastSync = new Date(); }
+    try { await T(fb.fs.setDoc(fb.fs.doc(fb.db, "users", Auth.user.uid), { state: st, updatedAt: new Date().toISOString() }, { merge: true }), 15000); Auth.lastSync = new Date(); }
     catch (e) { console.warn("Sinxron xatosi", e); }
   };
   Auth.pullState = async () => {
     if (Auth.mode !== "cloud" || !Auth.user) return null;
-    try { await loadFB(); const s = await fb.fs.getDoc(fb.fs.doc(fb.db, "users", Auth.user.uid)); return s.exists() ? s.data().state || null : null; }
+    try { await loadFB(); const s = await T(fb.fs.getDoc(fb.fs.doc(fb.db, "users", Auth.user.uid))); return s.exists() ? s.data().state || null : null; }
     catch { return null; }
   };
   window.addEventListener("pagehide", () => Auth.flush());
