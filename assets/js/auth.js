@@ -30,7 +30,7 @@
     const a = app.initializeApp(cfg);
     const au = auth.getAuth(a);
     await auth.setPersistence(au, auth.browserLocalPersistence).catch(() => {});
-    fb = { auth, fs, au, db: fs.getFirestore(a) };
+    fb = { auth, fs, au, db: window.QN_FIRESTORE_DB ? fs.getFirestore(a, window.QN_FIRESTORE_DB) : fs.getFirestore(a) };
     return fb;
   };
   const fbErr = (e) => {

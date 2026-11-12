@@ -16,6 +16,8 @@ window.QN_FIREBASE = {
   appId: "1:12908419173:web:33405421a3f4fc94f20e8c",
   measurementId: "G-STKDWVC694",
 };
+/* Firestore baza nomi (konsolda "default" deb yaratilgan) */
+window.QN_FIRESTORE_DB = "default";
 /* Misol:
 window.QN_FIREBASE = {
   apiKey: "AIza...",
