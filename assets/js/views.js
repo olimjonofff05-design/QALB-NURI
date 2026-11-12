@@ -779,6 +779,7 @@
         <label class="stack" style="gap:6px"><b>🔠 Arabcha matn o'lchami: <span id="asv">${Math.round(set.arScale * 100)}%</span></b><input type="range" id="as" min="0.8" max="1.6" step="0.05" value="${set.arScale}"/>
           <div class="dua-ar" style="text-align:center">بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِيمِ</div></label>
         <label class="row between"><b>🎙 Qori</b><select id="rc">${QN.reciters.map((r) => `<option value="${r.id}" ${r.id === set.reciter ? "selected" : ""}>${r.n}</option>`).join("")}</select></label>
+        <label class="row between"><b>🗣 Arabcha ovoz manbai</b><select id="vm"><option value="auto">Avtomatik (tavsiya)</option><option value="cloud">Onlayn ovoz (Google)</option><option value="device">Qurilma ovozi</option></select></label>
         <div class="row between"><b>🔊 Arabcha ovozni sinash</b>${say("بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِيمِ", "btn ghost sm", "▶ Sinash")}</div>
       </div>
       <div class="card stack"><h3>💾 Progressni saqlash</h3><p class="small">Barcha yutuqlaringiz shu brauzerda saqlanadi. Boshqa qurilmaga o'tkazish uchun faylga eksport qiling.</p>
@@ -793,6 +794,7 @@
     $("#dk").onchange = (e) => { set.dark = e.target.checked; A.save(); A.applySettings(); };
     $("#as").oninput = (e) => { set.arScale = +e.target.value; $("#asv").textContent = Math.round(set.arScale * 100) + "%"; A.applySettings(); A.save(); };
     $("#rc").onchange = (e) => { set.reciter = e.target.value; A.save(); };
+    $("#vm").value = set.voice || "auto"; $("#vm").onchange = (e) => { set.voice = e.target.value; A.save(); };
     $("#ex").onclick = () => { const b = new Blob([JSON.stringify(S(), null, 1)], { type: "application/json" }); const a = document.createElement("a"); a.href = URL.createObjectURL(b); a.download = `qalb-nuri-progress-${A.todayStr()}.json`; a.click(); };
     $("#im").onchange = async (e) => { try { A.importState(JSON.parse(await e.target.files[0].text())); A.applySettings(); A.refreshShell(); toast("Progress tiklandi!"); viewSettings(); } catch { toast("Fayl noto'g'ri."); } };
     $("#rs").onclick = () => { if (confirm("Barcha progress o'chiriladi. Ishonchingiz komilmi?")) { A.reset(); A.applySettings(); A.refreshShell(); toast("Progress tozalandi."); viewSettings(); } };
@@ -825,7 +827,7 @@
   ];
   const route = () => {
     cleanups.forEach((f) => f()); cleanups = [];
-    if ("speechSynthesis" in window) speechSynthesis.cancel();
+    A.stopSpeech();
     const h = location.hash || "#/";
     for (const [re, fn, nav] of routes) {
       const m = h.match(re);

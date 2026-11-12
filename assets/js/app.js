@@ -16,7 +16,7 @@
   const blank = () => ({
     letters: {}, lessons: {}, read: {}, hifz: {}, ibodat: {}, duo: {}, hadis: {}, names: {}, sunnat: {},
     xp: 0, streak: { n: 0, last: "" }, daily: { d: "", n: 0 }, badges: {}, quizBest: {}, tasbeh: 0,
-    settings: { reciter: "ar.husary", arScale: 1, dark: false, city: 0, method: 3, tr: true, translit: true, rate: 1, repeat: 1 },
+    settings: { reciter: "ar.husary", arScale: 1, dark: false, city: 0, method: 3, tr: true, translit: true, rate: 1, repeat: 1, voice: "auto" },
     lastRoute: "",
   });
   let S;
@@ -131,11 +131,38 @@
     arVoice = vs.find((v) => /^ar/i.test(v.lang) && /google/i.test(v.name)) || vs.find((v) => /^ar/i.test(v.lang)) || null;
   };
   if ("speechSynthesis" in window) { loadVoices(); speechSynthesis.onvoiceschanged = loadVoices; }
-  const speak = (text, rate = 0.72) => new Promise((res) => {
-    if (!("speechSynthesis" in window)) { toast("Brauzeringiz ovozli o'qishni qo'llamaydi. Chrome yoki Edge'dan foydalaning."); return res(); }
-    stopAll(true);
+  /* Onlayn arabcha ovoz (qurilmada arabcha ovoz bo'lmasa) */
+  const ttsAudio = new Audio();
+  const chunks = (text) => {
+    const out = []; let cur = "";
+    for (const w of text.replace(/[«»"()]/g, " ").split(/\s+/).filter(Boolean)) {
+      if ((cur + " " + w).length > 170 && cur) { out.push(cur); cur = w; } else cur = cur ? cur + " " + w : w;
+    }
+    if (cur) out.push(cur); return out;
+  };
+  const cloudSpeak = (text, rate) => new Promise((res) => {
+    const parts = chunks(text); let i = 0;
+    const next = () => {
+      if (i >= parts.length) return res(true);
+      ttsAudio.src = `https://translate.google.com/translate_tts?ie=UTF-8&tl=ar&client=tw-ob&q=${encodeURIComponent(parts[i++])}`;
+      ttsAudio.playbackRate = rate < 0.8 ? 0.85 : 1;
+      ttsAudio.onended = next;
+      ttsAudio.onerror = () => res(false);
+      ttsAudio.play().catch(() => res(false));
+    };
+    next();
+  });
+  const speak = (text, rate = 0.72) => new Promise(async (res) => {
+    stopAll(true); ttsAudio.pause();
     loadVoices();
-    if (!arVoice && !voiceWarned) { voiceWarned = true; toast("⚠️ Qurilmada arab tili ovozi topilmadi. Chrome/Edge brauzerida yoki telefon sozlamalarida (Matnni nutqqa → arab tili) o'rnating.", 6000); }
+    const mode = S.settings.voice || "auto";
+    const hasLocal = "speechSynthesis" in window && arVoice;
+    if (mode === "cloud" || (mode === "auto" && !hasLocal)) {
+      const ok = await cloudSpeak(text, rate);
+      if (ok) return res();
+      if (!hasLocal) { if (!voiceWarned) { voiceWarned = true; toast("⚠️ Ovoz yuklanmadi. Internet aloqasini tekshiring.", 4000); } return res(); }
+    }
+    if (!("speechSynthesis" in window)) return res();
     const u = new SpeechSynthesisUtterance(text);
     u.lang = "ar-SA"; if (arVoice) u.voice = arVoice; u.rate = rate;
     u.onend = u.onerror = () => res();
@@ -179,7 +206,7 @@
     playItem();
   };
   const stopAll = (keepSpeech) => {
-    audio.pause(); if (!keepSpeech && "speechSynthesis" in window) speechSynthesis.cancel();
+    audio.pause(); if (!keepSpeech) { ttsAudio.pause(); if ("speechSynthesis" in window) speechSynthesis.cancel(); }
   };
   $("#plPlay").onclick = () => { if (audio.paused) { audio.play(); $("#plPlay").textContent = "⏸"; } else { audio.pause(); $("#plPlay").textContent = "▶"; } };
   $("#plNext").onclick = () => { if (P.i < P.queue.length - 1) { P.i++; P.rep = 0; playItem(); } };
@@ -234,5 +261,5 @@
   /* ---------------- Eksport ---------------- */
   window.QNapp = { $, $$, esc, arDigits, todayStr, dayOfYear, shuffle, pick, S: () => S, save, toast, confetti, award, toggle, cnt,
     modPct, totalPct, levelName, badgesDef, hifzUnits, lessonsOf, refreshShell, applySettings, speak, playAyahs, stopAll, audio, P,
-    recToggle, loadSurah, ayahUrl, reset: () => { S = blank(); save(); }, importState: (o) => { S = Object.assign(blank(), o); S.settings = Object.assign(blank().settings, o.settings || {}); save(); } };
+    recToggle, loadSurah, stopSpeech: () => { ttsAudio.pause(); if ("speechSynthesis" in window) speechSynthesis.cancel(); }, ayahUrl, reset: () => { S = blank(); save(); }, importState: (o) => { S = Object.assign(blank(), o); S.settings = Object.assign(blank().settings, o.settings || {}); save(); } };
 })();
